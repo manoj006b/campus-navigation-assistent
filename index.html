@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Map My Campus</title>
+    <title>Find Your Way</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ----- (your original styles, unchanged) ----- */
         * {
             margin: 0;
             padding: 0;
@@ -24,78 +23,116 @@
             height: 100vh;
         }
 
+        /* ===================== DESKTOP ===================== */
         @media screen and (min-width: 769px) {
             body {
                 flex-direction: row;
+                overflow: hidden;
             }
 
             nav {
-                background-color: rgb(158, 5, 228);
-                width: 30%;
-                min-width: 320px;
-                max-width: 400px;
+                background: linear-gradient(#50036a, #a147d8,#872ddc,purple);
+                width: 22%;
+                min-width: 240px;
+                max-width: 300px;
                 height: 100vh;
-                padding: 30px 20px;
+                padding: 30px 15px 0px 15px;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
+                align-items: flex-start;
                 overflow-y: auto;
+                overflow-x: visible;
                 flex-shrink: 0;
+                position: relative;
+                z-index: 500;
+            }
+            P{
+                color: whitesmoke;
+                text-align: center;
+            }
+
+            nav::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            nav::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            nav::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 4px;
             }
 
             .nav-container {
                 width: 100%;
                 max-width: 100%;
                 margin: 0;
+                overflow: visible;
             }
 
             .title-container {
-                text-align: center;
-                margin-bottom: 40px;
+                text-align: left;
+                margin-bottom: 25px;
+                width: 100%;
             }
 
             .head1 {
-                font-size: 2.2rem;
+                font-size: clamp(18px, 2.5vw, 30px);
                 font-family: Georgia, 'Times New Roman', Times, serif;
-                color: white;
+                color: rgb(234, 222, 198);
                 margin-bottom: 10px;
-                margin-top: -3%;
+                margin-top: 0;
+                white-space: nowrap;
             }
 
             .input-section {
                 width: 100%;
-                margin-top: -5%;
+                margin-top: 0;
+                overflow: visible;
+                position: relative;
+                z-index: 501;
             }
 
             .input-row {
                 display: flex;
                 flex-direction: column;
-                align-items: center;
+                align-items: flex-start;
                 gap: 0;
-                width: 90%;
+                width: 100%;
+                position: relative;
+                overflow: visible;
             }
 
             .input-wrapper {
                 width: 100%;
-                max-width: 100%;
-                min-width: auto;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
-                margin-bottom: 0px;
+                align-items: flex-start;
+                margin-bottom: 0;
+                position: relative;
+                overflow: visible;
+            }
+
+            .input-wrapper:first-of-type {
+                z-index: 502;
+            }
+
+            .input-wrapper:last-of-type {
+                z-index: 501;
             }
 
             #to-area {
-                margin-top: -8%;
+                margin-top: -5%;
             }
 
             .input-label {
                 color: #ffffff;
-                font-size: 1.3rem;
+                font-size: 1.1rem;
                 font-weight: bold;
                 margin-bottom: 5px;
                 display: block;
-                width: 90%;
+                width: 100%;
                 text-align: left;
             }
 
@@ -103,17 +140,18 @@
                 position: relative;
                 width: 100%;
                 display: flex;
-                justify-content: center;
+                justify-content: flex-start;
+                overflow: visible;
             }
 
             #fromBox,
             #toBox {
                 background-color: #041f76;
                 border-radius: 10px;
-                width: 90%;
-                height: 50px;
+                width: 100%;
+                height: 46px;
                 padding: 0 15px;
-                font-size: 1.1rem;
+                font-size: 0.95rem;
                 border: 2px solid rgb(5, 5, 79);
                 color: white;
                 transition: border-color 0.3s;
@@ -132,20 +170,20 @@
 
             .dropdown {
                 margin-top: 0;
+                margin-left: 2%;
                 display: none;
                 position: absolute;
                 top: 110%;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 88%;
-                max-height: 225px;
+                left: 0;
+                width: 94%;
+                max-height: 215px;
                 overflow-y: auto;
                 background-color: white;
                 border: 1px solid #597ae8;
                 border-top: none;
                 border-radius: 0 0 10px 10px;
                 list-style-type: none;
-                z-index: 1000;
+                z-index: 9999;
                 box-shadow: 0 4px 12px rgba(89, 87, 87, 0.1);
             }
 
@@ -153,7 +191,7 @@
                 padding: 10px 12px;
                 border-bottom: 1px solid #eee;
                 cursor: pointer;
-                font-size: 1.3rem;
+                font-size: 1.2rem;
                 text-align: center;
                 transition: all 0.2s;
                 font-family: 'Times New Roman', Times, serif;
@@ -171,15 +209,15 @@
             .swap-container {
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-end;
                 width: 100%;
-                padding: 0;
-                margin-left: 110%;
+                padding: 6px 0;
+                margin: 0;
             }
 
             .swapbox {
-                width: 50px;
-                height: 50px;
+                width: 44px;
+                height: 44px;
                 cursor: pointer;
                 border-radius: 18px;
                 transition: transform 0.3s;
@@ -187,7 +225,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 24px;
+                font-size: 22px;
             }
 
             .swapbox:hover {
@@ -211,20 +249,19 @@
             .button-container {
                 display: flex;
                 justify-content: center;
-                gap: 20px;
-                margin-top: 15px;
+                gap: 12px;
+                margin-top: 14px;
                 margin-bottom: 10px;
-                width: 75%;
-                margin-left: 7%;
+                width: 100%;
             }
 
             button {
                 background-color: rgb(5, 5, 79);
                 color: white;
-                width: 90%;
-                height: 45px;
+                width: 100%;
+                height: 42px;
                 border-radius: 18px;
-                font-size: 1.2rem;
+                font-size: 0.95rem;
                 border: 2px solid rgb(5, 5, 79);
                 cursor: pointer;
                 transition: all 0.3s;
@@ -248,85 +285,214 @@
 
             .map-section {
                 flex: 1;
-                width: 75%;
                 height: 100vh;
                 position: relative;
                 background-color: #f5f5f5;
                 overflow: hidden;
             }
+
+            /* ── Desktop Route Info Stack ── */
+            #desktopRouteInfoStack {
+                display: block;
+                width: 100%;
+                margin-top: 12px;
+                padding-bottom: 20px;
+            }
+
+            .route-info-box {
+                width: 100%;
+                background: rgba(255, 255, 255, 0.10);
+                border: 1.5px solid rgba(255, 255, 255, 0.20);
+                border-radius: 12px;
+                padding: 10px 13px;
+                margin-bottom: 7px;
+                cursor: pointer;
+                transition: all 0.25s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .route-info-box::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 12px 0 0 12px;
+                transition: background 0.25s;
+            }
+
+            .route-info-box.active-route {
+                background: rgba(255, 255, 255, 0.20);
+                border-color: rgba(255, 255, 255, 0.55);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+                transform: translateX(2px);
+            }
+
+            .route-info-box.active-route::before {
+                background: #FFE000;
+            }
+
+            .route-info-box:hover:not(.active-route) {
+                background: rgba(255, 255, 255, 0.16);
+                border-color: rgba(255, 255, 255, 0.35);
+                transform: translateX(2px);
+            }
+
+            .route-box-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 6px;
+            }
+
+            .route-box-label {
+                font-size: 0.70rem;
+                font-weight: 700;
+                color: rgba(255, 255, 255, 0.55);
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+            }
+
+            .route-box-label.shortest {
+                color: #FFE000;
+            }
+
+            .route-box-badge {
+                font-size: 0.62rem;
+                background: rgba(255, 255, 255, 0.13);
+                color: rgba(255, 255, 255, 0.75);
+                padding: 2px 7px;
+                border-radius: 8px;
+                font-weight: 600;
+            }
+
+            .route-box-badge.active-badge {
+                background: #FFE000;
+                color: #1a1a1a;
+            }
+
+            .route-box-stats {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+            }
+
+            .route-stat {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .route-stat-value {
+                font-size: 1.0rem;
+                font-weight: 700;
+                color: #ffffff;
+                line-height: 1.1;
+            }
+
+            .route-stat-unit {
+                font-size: 0.62rem;
+                color: rgba(255, 255, 255, 0.55);
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+            }
+
+            .route-stat-divider {
+                width: 1px;
+                height: 26px;
+                background: rgba(255, 255, 255, 0.22);
+            }
+
+            /* Hide mobile box on desktop */
+            #mobileRouteInfo {
+                display: none !important;
+            }
         }
 
+        /* ===================== MOBILE ===================== */
         @media screen and (max-width: 768px) {
             nav {
                 background-color: rgb(158, 5, 228);
                 width: 100%;
-                padding: 20px;
+                padding: 15px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 flex-shrink: 0;
+                overflow: visible;
+                position: relative;
+                z-index: 2000;
+            }
+            p{
+                color: wheat;
+                margin-top: -2%;
             }
 
             .nav-container {
                 width: 100%;
-                max-width: 1400px;
+                max-width: 100%;
                 margin: 0 auto;
+                overflow: visible;
             }
 
             .title-container {
                 text-align: center;
-                margin-bottom: 30px;
+                margin-bottom: 20px;
             }
 
             .head1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
                 font-family: Georgia, 'Times New Roman', Times, serif;
                 color: white;
-                margin-bottom: 20px;
+                margin-bottom: 15px;
             }
 
             .input-section {
                 width: 100%;
                 position: relative;
+                z-index: 200;
+                overflow: visible;
             }
 
             .input-row {
                 display: grid;
                 grid-template-columns: 1fr auto;
                 grid-template-rows: auto auto;
-                gap: 10px 15px;
-                align-items: start;
-                max-width: 340px;
-                margin: 0 auto 0px;
-                margin-left: -2%;
+                gap: 10px 12px;
+                align-items: center;
+                width: 100%;
+                margin: 0;
+                overflow: visible;
             }
 
             .swap-container {
                 grid-column: 2;
                 grid-row: 1 / span 2;
-                padding-top: 35px;
-                margin: 0;
-                width: 60px;
                 display: flex;
                 justify-content: center;
-                margin-top: -53%;
+                align-items: center;
+                width: 50px;
+                margin: 0;
+                padding: 0;
             }
 
             .swapbox {
-                width: 45px;
-                height: 45px;
+                width: 42px;
+                height: 42px;
                 cursor: pointer;
-                border-radius: 18px;
+                border-radius: 14px;
                 transition: transform 0.3s;
                 background-color: #fff;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 24px;
+                font-size: 22px;
             }
 
-            .swapbox:hover {
-                transform: scale(1.1);
+            .swapbox {
+                transition: transform 0.3s;
             }
 
             .rotate-once {
@@ -346,19 +512,19 @@
             .input-wrapper {
                 grid-column: 1;
                 width: 100%;
-                max-width: none;
-                min-width: auto;
                 margin: 0;
+                position: relative;
+                overflow: visible;
             }
 
             .input-wrapper:first-child {
                 grid-row: 1;
-                margin-bottom: 5px;
+                z-index: 202;
             }
 
             .input-wrapper:last-child {
                 grid-row: 2;
-                margin-top: 0;
+                z-index: 201;
             }
 
             .input-label {
@@ -369,7 +535,7 @@
                 position: relative;
                 width: 100%;
                 display: flex;
-                justify-content: center;
+                overflow: visible;
             }
 
             #fromBox,
@@ -377,13 +543,12 @@
                 background-color: #041f76;
                 border-radius: 10px;
                 width: 100%;
-                height: 45px;
+                height: 44px;
                 padding: 0 15px;
-                font-size: 1.1rem;
+                font-size: 1rem;
                 border: 2px solid rgb(5, 5, 79);
                 color: white;
                 transition: border-color 0.3s;
-                margin-bottom: 0;
             }
 
             #fromBox:focus,
@@ -397,23 +562,20 @@
             }
 
             .dropdown {
-                width: 97%;
-                margin-top: 3%;
-                height: 220px;
-                font-size: 30px;
+                width: 95%;
                 display: none;
                 position: absolute;
-                top: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-                max-height: 275px;
+                top: 115%;
+                left: 0;
+                margin-left: 2%;
+                max-height: 220px;
                 overflow-y: auto;
                 background-color: white;
                 border: 1px solid #597ae8;
                 border-top: none;
                 border-radius: 0 0 10px 10px;
                 list-style-type: none;
-                z-index: 1000;
+                z-index: 99999;
                 box-shadow: 0 4px 12px rgba(89, 87, 87, 0.1);
             }
 
@@ -421,7 +583,7 @@
                 padding: 10px 12px;
                 border-bottom: 1px solid #eee;
                 cursor: pointer;
-                font-size: 21px;
+                font-size: 18px;
                 text-align: center;
                 transition: all 0.2s;
                 font-family: 'Times New Roman', Times, serif;
@@ -437,24 +599,20 @@
             }
 
             .button-container {
-                position: absolute;
-                top: 40%;
-                right: -2%;
-                display: block;
-                flex-direction: column;
-                gap: 8px;
-                margin: 0;
-                margin-top: 7%;
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 12px;
+                width: 100%;
             }
 
             button {
                 background-color: rgb(5, 5, 79);
                 color: white;
-                width: 40px;
+                width: 100%;
                 height: 40px;
-                margin: 0;
                 border-radius: 12px;
-                font-size: 1.1rem;
+                font-size: 1rem;
                 border: 2px solid rgb(5, 5, 79);
                 cursor: pointer;
                 transition: all 0.3s;
@@ -468,24 +626,92 @@
                 transform: translateY(-2px);
             }
 
-            .search-text {
-                display: none;
-            }
-
             .search-icon {
                 display: inline;
-                font-size: 20px;
+                font-size: 18px;
             }
 
             .map-section {
+                z-index: 1;
                 flex: 1;
                 width: 100%;
                 position: relative;
                 background-color: #f5f5f5;
                 overflow: hidden;
             }
+
+            /* Hide desktop stack on mobile */
+            #desktopRouteInfoStack {
+                display: none !important;
+            }
+
+            /* ── Mobile Route Info Box (bottom-left of map) ── */
+            #mobileRouteInfo {
+                position: absolute;
+                bottom: 50px;
+                left: 14px;
+                z-index: 1000;
+                background: rgba(4, 31, 118, 0.93);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1.5px solid rgba(255, 255, 255, 0.25);
+                border-radius: 14px;
+                padding: 11px 15px;
+                min-width: 145px;
+                display: none;
+                box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+            }
+
+            #mobileRouteInfo.active {
+                display: block;
+                animation: mobilePopIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+            }
+
+            @keyframes mobilePopIn {
+                from {
+                    transform: scale(0.8) translateY(10px);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: scale(1) translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .mobile-stat-label {
+                font-size: 0.60rem;
+                color: rgba(255, 255, 255, 0.55);
+                text-transform: uppercase;
+                letter-spacing: 0.07em;
+                display: block;
+                margin-bottom: 2px;
+            }
+
+            .mobile-stat-value {
+                font-size: 1.25rem;
+                font-weight: 800;
+                color: #FFE000;
+                line-height: 1.1;
+                display: block;
+            }
+
+            .mobile-stat-divider {
+                height: 1px;
+                background: rgba(255, 255, 255, 0.15);
+                margin: 7px 0;
+            }
+
+            .mobile-time-value {
+                font-size: 1.05rem;
+                font-weight: 700;
+                color: #ffffff;
+                line-height: 1.1;
+                display: block;
+            }
         }
 
+        /* ===================== SHARED ===================== */
         .map-container {
             width: 100%;
             height: 100%;
@@ -544,36 +770,9 @@
             background-color: #c82333;
         }
 
+        /* Old nav-info-panel hidden entirely */
         .nav-info-panel {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: white;
-            padding: 15px 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            display: none;
-            min-width: 150px;
-            text-align: center;
-
-        }
-
-        .nav-info-panel.active {
-            display: block;
-        }
-
-        .nav-info-distance {
-            font-size: 24px;
-            font-weight: bold;
-            color: #1967d2;
-            margin-bottom: 5px;
-        }
-
-        .nav-info-time {
-            font-size: 16px;
-            color: #666;
+            display: none !important;
         }
 
         .custom-landmark-marker {
@@ -591,6 +790,13 @@
             border: none;
         }
 
+        .route-arrow-marker {
+            background: none;
+            border: none;
+            pointer-events: none;
+        }
+
+        /* ===================== SIDEBAR ===================== */
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #34495e;
@@ -641,6 +847,7 @@
 
         .sidebar.open {
             right: 0;
+            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .sidebar-header {
@@ -838,10 +1045,6 @@
             }
         }
 
-        .sidebar.open {
-            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -854,7 +1057,7 @@
             }
         }
 
-        @media (max-width:768px) {
+        @media (max-width: 768px) {
             .sidebar {
                 max-width: 100%;
             }
@@ -874,7 +1077,7 @@
             }
         }
 
-        @media (max-width:480px) {
+        @media (max-width: 480px) {
             .sidebar-header {
                 padding: 20px;
             }
@@ -907,7 +1110,8 @@
     <nav>
         <div class="nav-container">
             <div class="title-container">
-                <h1 class="head1">Map My Campus</h1>
+                <h1 class="head1">FIND YOUR WAY</h1>
+                <p>Campus Navigation Assistant</p>
             </div>
             <div class="input-section">
                 <div class="input-row">
@@ -920,7 +1124,7 @@
                         </div>
                     </div>
                     <div class="swap-container">
-                        <div class="swapbox">⇄</div>
+                        <div class="swapbox">&#8644;</div>
                     </div>
                     <div class="input-wrapper" id="to-area">
                         <label class="input-label" for="toBox">To:</label>
@@ -932,29 +1136,31 @@
                     </div>
                 </div>
                 <div class="button-container">
-                    <button id="but1" onclick="searchRoute()">
-                        <span class="search-text">Search ❯❯</span>
-                        <span class="search-icon">❯❯</span>
-                    </button>
-                    <button id="but2" onclick="clearRoute()">
-                        <span class="search-text">Clear ❌</span>
-                        <span class="search-icon">❌</span>
-                    </button>
+                    <button id="but1" onclick="searchRoute()"><span class="search-text">Search
+                            &rsaquo;&rsaquo;</span></button>
+                    <button id="but2" onclick="clearRoute()"><span class="search-text">Clear &#10060;</span></button>
                 </div>
             </div>
+            <!-- Desktop route info stack lives here, below buttons -->
+            <div id="desktopRouteInfoStack"></div>
         </div>
     </nav>
 
     <div id="mapSection" class="map-section">
-        <button id="currentLocationBtn" class="current-location-btn">
-            <i class="fas fa-location-crosshairs"></i>
-        </button>
-        <button id="landmarkToggleBtn" class="landmark-toggle-btn">
-            <i class="fas fa-map-pin"></i>
-        </button>
+        <button id="currentLocationBtn" class="current-location-btn"><i class="fas fa-location-crosshairs"></i></button>
+        <button id="landmarkToggleBtn" class="landmark-toggle-btn"><i class="fas fa-map-pin"></i></button>
+        <!-- Hidden legacy panel -->
         <div id="navInfoPanel" class="nav-info-panel">
             <div id="navDistance" class="nav-info-distance">0 meters</div>
             <div id="navTime" class="nav-info-time">0 minutes</div>
+        </div>
+        <!-- Mobile bottom-left route info -->
+        <div id="mobileRouteInfo">
+            <span class="mobile-stat-label">Distance</span>
+            <span class="mobile-stat-value" id="mobileDistVal">&#8212;</span>
+            <div class="mobile-stat-divider"></div>
+            <span class="mobile-stat-label">Est. Walk</span>
+            <span class="mobile-time-value" id="mobileTimeVal">&#8212;</span>
         </div>
         <div id="mapContainer" class="map-container"></div>
     </div>
@@ -1050,38 +1256,22 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
     <script>
-        // ---------- GLOBALS (original + extended for deviation handling) ----------
-        let campusMap;
-        let userLocationMarker;
-        let accuracyCircle;
-        let userWatchId = null;
-        let userLatLng = null;
-        let startMarker = null;
-        let endMarker = null;
-        let routeLayerGroup = null;
-        let landmarkMarkersLayer = null;
-        let landmarksVisible = true;
-        let animationFrameId = null;
-
-        // Navigation state
-        let isNavigating = false;
-        let currentDestination = null;            // destination landmark object
-        let fullRoutePath = [];                 // full latlngs of selected route
-        let currentPathIndices = [];            // remaining node indices (dynamic)
+        // ---------- GLOBALS ----------
+        let campusMap, userLocationMarker, accuracyCircle;
+        let userWatchId = null, userLatLng = null;
+        let startMarker = null, endMarker = null;
+        let routeLayerGroup = null, landmarkMarkersLayer = null;
+        let landmarksVisible = true, animationFrameId = null;
+        let arrowMarker = null, arrowAnimFrameId = null, arrowRouteLatlngs = [], arrowProgress = 0;
+        const ARROW_SPEED = 0.00012;
+        let isNavigating = false, currentDestination = null, fullRoutePath = [], currentPathIndices = [];
         let lastUpdateTime = 0;
-        const UPDATE_THRESHOLD = 2000;          // 2 sec
-        const PROXIMITY_THRESHOLD = 15;         // meters (trim passed nodes)
-        const DEVIATION_THRESHOLD = 25;          // meters – trigger recalc if off route
-
-        let graph = { nodes: [], edges: [] };
-        let nodeIndex = new Map();
-        let places = [];
-        let lastResults;
+        const UPDATE_THRESHOLD = 2000, PROXIMITY_THRESHOLD = 15, DEVIATION_THRESHOLD = 25;
+        let graph = { nodes: [], edges: [] }, nodeIndex = new Map(), places = [];
+        let lastResults, activeRouteIndex = 0;
         const KROUTES = 5;
 
-        // landmarks for routing (unchanged)
         const landmarks = [
             { "id": "front", "name": "Front Gate", "lat": 11.034770, "lng": 77.033850 },
             { "id": "admiss", "name": "Admission Office", "lat": 11.032585, "lng": 77.033888 },
@@ -1109,10 +1299,9 @@
             { "id": "back", "name": "Back Gate", "lat": 11.031834, "lng": 77.036534 }
         ];
 
-        // markers display data (unchanged)
         const locationmarker = [
             { "id": "front", "name": "Front Gate", "lat": 11.034820, "lng": 77.033845, "icon": "⛩️" },
-            { "id": "admiss", "name": "Admission Office", "lat": 11.032726, "lng": 77.033547, "icon": "💼 " },
+            { "id": "admiss", "name": "Admission Office", "lat": 11.032726, "lng": 77.033547, "icon": "💼" },
             { "id": "lib", "name": "Library", "lat": 11.033706, "lng": 77.033437, "icon": "📚" },
             { "id": "prin", "name": "Principal Office", "lat": 11.033200, "lng": 77.033947, "icon": "💼" },
             { "id": "sf", "name": "S F Office", "lat": 11.033105, "lng": 77.033502, "icon": "💼" },
@@ -1144,7 +1333,49 @@
 
         const graphData = {
             "nodes": [
-                { "id": "G1", "lat": 11.034820, "lng": 77.033845 }, { "id": "G2", "lat": 11.034563, "lng": 77.033848 }, { "id": "G3", "lat": 11.034280, "lng": 77.033855 }, { "id": "G4", "lat": 11.034310, "lng": 77.034100 }, { "id": "G5", "lat": 11.034325, "lng": 77.034371 }, { "id": "G6", "lat": 11.034343, "lng": 77.034768 }, { "id": "G7", "lat": 11.034369, "lng": 77.035226 }, { "id": "G8", "lat": 11.034391, "lng": 77.035535 }, { "id": "G9", "lat": 11.033964, "lng": 77.035553 }, { "id": "G10", "lat": 11.034000, "lng": 77.035806 }, { "id": "G11", "lat": 11.034019, "lng": 77.035980 }, { "id": "G12", "lat": 11.034009, "lng": 77.036093 }, { "id": "G13", "lat": 11.033956, "lng": 77.036219 }, { "id": "G14", "lat": 11.033834, "lng": 77.036351 }, { "id": "G15", "lat": 11.033289, "lng": 77.036422 }, { "id": "G16", "lat": 11.032674, "lng": 77.036463 }, { "id": "G17", "lat": 11.032278, "lng": 77.036498 }, { "id": "G18", "lat": 11.031834, "lng": 77.036534 }, { "id": "G19", "lat": 11.034009, "lng": 77.033856 }, { "id": "G20", "lat": 11.033670, "lng": 77.033854 }, { "id": "G21", "lat": 11.033666, "lng": 77.033679 }, { "id": "G22", "lat": 11.033664, "lng": 77.033435 }, { "id": "G23", "lat": 11.033630, "lng": 77.033403 }, { "id": "G24", "lat": 11.033372, "lng": 77.033410 }, { "id": "G25", "lat": 11.033250, "lng": 77.033413 }, { "id": "G26", "lat": 11.033248, "lng": 77.033060 }, { "id": "G27", "lat": 11.033240, "lng": 77.032791 }, { "id": "G28", "lat": 11.033230, "lng": 77.032509 }, { "id": "G29", "lat": 11.033111, "lng": 77.033410 }, { "id": "G30", "lat": 11.032566, "lng": 77.033426 }, { "id": "G31", "lat": 11.032410, "lng": 77.033432 }, { "id": "G32", "lat": 11.032415, "lng": 77.033340 }, { "id": "G33", "lat": 11.032410, "lng": 77.033218 }, { "id": "G34", "lat": 11.032413, "lng": 77.032941 }, { "id": "G35", "lat": 11.032558, "lng": 77.033215 }, { "id": "G36", "lat": 11.032550, "lng": 77.032936 }, { "id": "G37", "lat": 11.032545, "lng": 77.032686 }, { "id": "G38", "lat": 11.032397, "lng": 77.032700 }, { "id": "G39", "lat": 11.032179, "lng": 77.032700 }, { "id": "G40", "lat": 11.032013, "lng": 77.032709 }, { "id": "G41", "lat": 11.033400, "lng": 77.033864 }, { "id": "G42", "lat": 11.033266, "lng": 77.033756 }, { "id": "G43", "lat": 11.033269, "lng": 77.033861 }, { "id": "G44", "lat": 11.033270, "lng": 77.033949 }, { "id": "G45", "lat": 11.033277, "lng": 77.034183 }, { "id": "G46", "lat": 11.033274, "lng": 77.034335 }, { "id": "G47", "lat": 11.033687, "lng": 77.034317 }, { "id": "G48", "lat": 11.033690, "lng": 77.034505 }, { "id": "G49", "lat": 11.034020, "lng": 77.034499 }, { "id": "G50", "lat": 11.034161, "lng": 77.034480 }, { "id": "G51", "lat": 11.034203, "lng": 77.034380 }, { "id": "G52", "lat": 11.033114, "lng": 77.034342 }, { "id": "G53", "lat": 11.032854, "lng": 77.034345 }, { "id": "G54", "lat": 11.032605, "lng": 77.034346 }, { "id": "G55", "lat": 11.032585, "lng": 77.033888 }, { "id": "G56", "lat": 11.032609, "lng": 77.034594 }, { "id": "G57", "lat": 11.032630, "lng": 77.035112 }, { "id": "G58", "lat": 11.033135, "lng": 77.035095 }, { "id": "G59", "lat": 11.033130, "lng": 77.034715 }, { "id": "G60", "lat": 11.033706, "lng": 77.035081 }, { "id": "G61", "lat": 11.033711, "lng": 77.035527 }, { "id": "G62", "lat": 11.033743, "lng": 77.035548 }, { "id": "G63", "lat": 11.032650, "lng": 77.035551 }, { "id": "G64", "lat": 11.032646, "lng": 77.035449 }, { "id": "G65", "lat": 11.032638, "lng": 77.035259 }, { "id": "G66", "lat": 11.032652, "lng": 77.035604 }, { "id": "G67", "lat": 11.032658, "lng": 77.035785 }, { "id": "G68", "lat": 11.032665, "lng": 77.036175 }, { "id": "G69", "lat": 11.032188, "lng": 77.035270 }, { "id": "G70", "lat": 11.031744, "lng": 77.035278 }, { "id": "G71", "lat": 11.031262, "lng": 77.035285 }, { "id": "G72", "lat": 11.030725, "lng": 77.035295 }, { "id": "G73", "lat": 11.032163, "lng": 77.034363 }, { "id": "G74", "lat": 11.032160, "lng": 77.033896 }, { "id": "G75", "lat": 11.032140, "lng": 77.033440 }, { "id": "G76", "lat": 11.032534, "lng": 77.032396 }, { "id": "G77", "lat": 11.032587, "lng": 77.032278 }, { "id": "G78", "lat": 11.032690, "lng": 77.032223 }, { "id": "G79", "lat": 11.033037, "lng": 77.032115 }, { "id": "G80", "lat": 11.033182, "lng": 77.032198 }, { "id": "G81", "lat": 11.033232, "lng": 77.032396 }, { "id": "G82", "lat": 11.033280, "lng": 77.034520 }, { "id": "G83", "lat": 11.033245, "lng": 77.033032 }, { "id": "G84", "lat": 11.033405, "lng": 77.033032 }, { "id": "G85", "lat": 11.033714, "lng": 77.035304 }
+                { "id": "G1", "lat": 11.034820, "lng": 77.033845 }, { "id": "G2", "lat": 11.034563, "lng": 77.033848 },
+                { "id": "G3", "lat": 11.034280, "lng": 77.033855 }, { "id": "G4", "lat": 11.034310, "lng": 77.034100 },
+                { "id": "G5", "lat": 11.034325, "lng": 77.034371 }, { "id": "G6", "lat": 11.034343, "lng": 77.034768 },
+                { "id": "G7", "lat": 11.034369, "lng": 77.035226 }, { "id": "G8", "lat": 11.034391, "lng": 77.035535 },
+                { "id": "G9", "lat": 11.033964, "lng": 77.035553 }, { "id": "G10", "lat": 11.034000, "lng": 77.035806 },
+                { "id": "G11", "lat": 11.034019, "lng": 77.035980 }, { "id": "G12", "lat": 11.034009, "lng": 77.036093 },
+                { "id": "G13", "lat": 11.033956, "lng": 77.036219 }, { "id": "G14", "lat": 11.033834, "lng": 77.036351 },
+                { "id": "G15", "lat": 11.033289, "lng": 77.036422 }, { "id": "G16", "lat": 11.032674, "lng": 77.036463 },
+                { "id": "G17", "lat": 11.032278, "lng": 77.036498 }, { "id": "G18", "lat": 11.031834, "lng": 77.036534 },
+                { "id": "G19", "lat": 11.034009, "lng": 77.033856 }, { "id": "G20", "lat": 11.033670, "lng": 77.033854 },
+                { "id": "G21", "lat": 11.033666, "lng": 77.033679 }, { "id": "G22", "lat": 11.033664, "lng": 77.033435 },
+                { "id": "G23", "lat": 11.033630, "lng": 77.033403 }, { "id": "G24", "lat": 11.033372, "lng": 77.033410 },
+                { "id": "G25", "lat": 11.033250, "lng": 77.033413 }, { "id": "G26", "lat": 11.033248, "lng": 77.033060 },
+                { "id": "G27", "lat": 11.033240, "lng": 77.032791 }, { "id": "G28", "lat": 11.033230, "lng": 77.032509 },
+                { "id": "G29", "lat": 11.033111, "lng": 77.033410 }, { "id": "G30", "lat": 11.032566, "lng": 77.033426 },
+                { "id": "G31", "lat": 11.032410, "lng": 77.033432 }, { "id": "G32", "lat": 11.032415, "lng": 77.033340 },
+                { "id": "G33", "lat": 11.032410, "lng": 77.033218 }, { "id": "G34", "lat": 11.032413, "lng": 77.032941 },
+                { "id": "G35", "lat": 11.032558, "lng": 77.033215 }, { "id": "G36", "lat": 11.032550, "lng": 77.032936 },
+                { "id": "G37", "lat": 11.032545, "lng": 77.032686 }, { "id": "G38", "lat": 11.032397, "lng": 77.032700 },
+                { "id": "G39", "lat": 11.032179, "lng": 77.032700 }, { "id": "G40", "lat": 11.032013, "lng": 77.032709 },
+                { "id": "G41", "lat": 11.033400, "lng": 77.033864 }, { "id": "G42", "lat": 11.033266, "lng": 77.033756 },
+                { "id": "G43", "lat": 11.033269, "lng": 77.033861 }, { "id": "G44", "lat": 11.033270, "lng": 77.033949 },
+                { "id": "G45", "lat": 11.033277, "lng": 77.034183 }, { "id": "G46", "lat": 11.033274, "lng": 77.034335 },
+                { "id": "G47", "lat": 11.033687, "lng": 77.034317 }, { "id": "G48", "lat": 11.033690, "lng": 77.034505 },
+                { "id": "G49", "lat": 11.034020, "lng": 77.034499 }, { "id": "G50", "lat": 11.034161, "lng": 77.034480 },
+                { "id": "G51", "lat": 11.034203, "lng": 77.034380 }, { "id": "G52", "lat": 11.033114, "lng": 77.034342 },
+                { "id": "G53", "lat": 11.032854, "lng": 77.034345 }, { "id": "G54", "lat": 11.032605, "lng": 77.034346 },
+                { "id": "G55", "lat": 11.032585, "lng": 77.033888 }, { "id": "G56", "lat": 11.032609, "lng": 77.034594 },
+                { "id": "G57", "lat": 11.032630, "lng": 77.035112 }, { "id": "G58", "lat": 11.033135, "lng": 77.035095 },
+                { "id": "G59", "lat": 11.033130, "lng": 77.034715 }, { "id": "G60", "lat": 11.033706, "lng": 77.035081 },
+                { "id": "G61", "lat": 11.033711, "lng": 77.035527 }, { "id": "G62", "lat": 11.033743, "lng": 77.035548 },
+                { "id": "G63", "lat": 11.032650, "lng": 77.035551 }, { "id": "G64", "lat": 11.032646, "lng": 77.035449 },
+                { "id": "G65", "lat": 11.032638, "lng": 77.035259 }, { "id": "G66", "lat": 11.032652, "lng": 77.035604 },
+                { "id": "G67", "lat": 11.032658, "lng": 77.035785 }, { "id": "G68", "lat": 11.032665, "lng": 77.036175 },
+                { "id": "G69", "lat": 11.032188, "lng": 77.035270 }, { "id": "G70", "lat": 11.031744, "lng": 77.035278 },
+                { "id": "G71", "lat": 11.031262, "lng": 77.035285 }, { "id": "G72", "lat": 11.030725, "lng": 77.035295 },
+                { "id": "G73", "lat": 11.032163, "lng": 77.034363 }, { "id": "G74", "lat": 11.032160, "lng": 77.033896 },
+                { "id": "G75", "lat": 11.032140, "lng": 77.033440 }, { "id": "G76", "lat": 11.032534, "lng": 77.032396 },
+                { "id": "G77", "lat": 11.032587, "lng": 77.032278 }, { "id": "G78", "lat": 11.032690, "lng": 77.032223 },
+                { "id": "G79", "lat": 11.033037, "lng": 77.032115 }, { "id": "G80", "lat": 11.033182, "lng": 77.032198 },
+                { "id": "G81", "lat": 11.033232, "lng": 77.032396 }, { "id": "G82", "lat": 11.033280, "lng": 77.034520 },
+                { "id": "G83", "lat": 11.033245, "lng": 77.033032 }, { "id": "G84", "lat": 11.033405, "lng": 77.033032 },
+                { "id": "G85", "lat": 11.033714, "lng": 77.035304 }
             ],
             "edges": [
                 ["G1", "G2"], ["G2", "G3"], ["G3", "G4"], ["G4", "G5"], ["G5", "G6"],
@@ -1190,516 +1421,406 @@
             'Back Gate': 'back'
         };
 
-        // ---------- CORE UI FUNCTIONS (unchanged) ----------
-        function openSidebar() { /* same as original */
-            const sideMenu = document.getElementById('sideMenu');
-            const overlay = document.getElementById('overlay');
-            sideMenu.classList.add('open');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => { document.getElementById('closeBtn').focus(); }, 100);
+        // ══ ROUTE INFO PANEL UTILITIES ══
+        function isMobile() { return window.innerWidth <= 768; }
+
+        function fmtDist(m) {
+            if (m >= 1000) return (m / 1000).toFixed(2) + ' km';
+            return Math.round(m) + ' m';
         }
-        function closeSidebar() {
-            const sideMenu = document.getElementById('sideMenu');
-            const overlay = document.getElementById('overlay');
-            sideMenu.classList.remove('open');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
+        function fmtTime(m) {
+            const mins = Math.ceil(m / 1.4 / 60);
+            return mins < 1 ? '< 1 min' : mins + ' min';
         }
-        function createStartIcon() { return L.divIcon({ className: 'start-marker-icon', html: `<svg width="30" height="30" viewBox="0 0 34 34" ...><circle cx="15" cy="15" r="14" fill="#000000" filter="url(#startShadow)"/><circle cx="15" cy="15" r="9.5" fill="#ffffff"/></svg>`, iconSize: [30, 30], iconAnchor: [17, 17], popupAnchor: [0, -18] }); }
-        function createEndIcon() { return L.divIcon({ className: 'end-marker-icon', html: `<svg width="25" height="32" viewBox="0 0 20 36" ...><path d="M15 0 ..." fill="#e53935" filter="url(#endShadow)"/><circle cx="15" cy="15" r="6.5" fill="#b71c1c"/><circle cx="15" cy="15" r="3" fill="#ffffff"/></svg>`, iconSize: [30, 42], iconAnchor: [15, 42], popupAnchor: [0, -44] }); }
-        function animatedPolyline(latlngs, options, duration = 3000) {
-            const polyline = L.polyline([], options);
-            const startTime = Date.now();
-            const totalPoints = latlngs.length;
-            function animate() {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const pointsToShow = Math.floor(progress * totalPoints);
-                if (pointsToShow > 0) {
-                    const partialCoords = latlngs.slice(0, pointsToShow);
-                    if (progress < 1 && pointsToShow < totalPoints) {
-                        const seg = (progress * totalPoints) - pointsToShow;
-                        const cur = latlngs[pointsToShow - 1], nxt = latlngs[pointsToShow];
-                        partialCoords.push([cur[0] + (nxt[0] - cur[0]) * seg, cur[1] + (nxt[1] - cur[1]) * seg]);
-                    }
-                    polyline.setLatLngs(partialCoords);
-                }
-                if (progress < 1) animationFrameId = requestAnimationFrame(animate);
+
+        function renderDesktopRouteStack(results, activeIdx) {
+            const stack = document.getElementById('desktopRouteInfoStack');
+            if (!stack) return;
+            stack.innerHTML = '';
+            if (!results || !results.length) return;
+            // sort ascending by distance, keep original index
+            const sorted = results
+                .map((r, i) => ({ ...r, origIdx: i }))
+                .sort((a, b) => a.distance - b.distance);
+
+            sorted.forEach((res, si) => {
+                const isActive = res.origIdx === activeIdx;
+                const box = document.createElement('div');
+                box.className = 'route-info-box' + (isActive ? ' active-route' : '');
+                const label = si === 0 ? 'Shortest Route' : 'Route ' + (si + 1);
+                const badgeText = isActive ? '&#9679; Active' : 'View';
+                box.innerHTML = `
+                    <div class="route-box-header">
+                        <span class="route-box-label${si === 0 ? ' shortest' : ''}">${label}</span>
+                        <span class="route-box-badge${isActive ? ' active-badge' : ''}">${badgeText}</span>
+                    </div>
+                    <div class="route-box-stats">
+                        <div class="route-stat">
+                            <span class="route-stat-value">${fmtDist(res.distance)}</span>
+                            <span class="route-stat-unit">Distance</span>
+                        </div>
+                        <div class="route-stat-divider"></div>
+                        <div class="route-stat">
+                            <span class="route-stat-value">${fmtTime(res.distance)}</span>
+                            <span class="route-stat-unit">Est. Walk</span>
+                        </div>
+                    </div>`;
+                box.addEventListener('click', () => renderSelectedRoute(res.origIdx));
+                stack.appendChild(box);
+            });
+        }
+
+        function updateMobileRouteInfo(distance) {
+            const box = document.getElementById('mobileRouteInfo');
+            if (!box) return;
+            if (distance == null || !isFinite(distance)) { box.classList.remove('active'); return; }
+            document.getElementById('mobileDistVal').textContent = fmtDist(distance);
+            document.getElementById('mobileTimeVal').textContent = fmtTime(distance);
+            box.classList.add('active');
+        }
+
+        function clearRouteInfoPanels() {
+            const stack = document.getElementById('desktopRouteInfoStack');
+            if (stack) stack.innerHTML = '';
+            const mob = document.getElementById('mobileRouteInfo');
+            if (mob) mob.classList.remove('active');
+        }
+
+        // ══ ARROW ANIMATION ══
+        function buildCumDist(ll) {
+            const c = [0];
+            for (let i = 1; i < ll.length; i++) c.push(c[i - 1] + hav({ lat: ll[i - 1][0], lng: ll[i - 1][1] }, { lat: ll[i][0], lng: ll[i][1] }));
+            return c;
+        }
+        function interpolateOnPath(ll, cum, prog) {
+            const total = cum[cum.length - 1], target = prog * total;
+            let lo = 0, hi = cum.length - 1;
+            while (lo < hi - 1) { const mid = (lo + hi) >> 1; if (cum[mid] <= target) lo = mid; else hi = mid; }
+            const sl = cum[hi] - cum[lo], t = sl > 0 ? (target - cum[lo]) / sl : 0;
+            const a = ll[lo], b = ll[hi];
+            const lat = a[0] + (b[0] - a[0]) * t, lng = a[1] + (b[1] - a[1]) * t;
+            const dy = b[0] - a[0], dx = (b[1] - a[1]) * Math.cos(a[0] * Math.PI / 180);
+            return { lat, lng, angleDeg: Math.atan2(dx, dy) * 180 / Math.PI };
+        }
+        function makeArrowIcon(deg) {
+            return L.divIcon({ className: 'route-arrow-marker', html: `<svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(${deg}deg);filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5));"><circle cx="18" cy="18" r="17" fill="rgba(255,230,0,0.22)"/><circle cx="18" cy="18" r="13" fill="#FFE000" stroke="#ff9900" stroke-width="2"/><polygon points="18,6 24,22 18,18 12,22" fill="#cc6600"/><circle cx="18" cy="25" r="2.5" fill="#cc6600"/></svg>`, iconSize: [36, 36], iconAnchor: [18, 18] });
+        }
+        function startArrowAnimation(ll, sp = 0) {
+            stopArrowAnimation();
+            if (!ll || ll.length < 2) return;
+            arrowRouteLatlngs = ll; arrowProgress = sp;
+            const cum = buildCumDist(ll), init = interpolateOnPath(ll, cum, sp);
+            if (!arrowMarker) arrowMarker = L.marker([init.lat, init.lng], { icon: makeArrowIcon(init.angleDeg), zIndexOffset: 1200, interactive: false }).addTo(campusMap);
+            else { arrowMarker.setLatLng([init.lat, init.lng]); arrowMarker.setIcon(makeArrowIcon(init.angleDeg)); }
+            let lts = null;
+            function loop(ts) {
+                if (lts !== null) { arrowProgress += ARROW_SPEED * (ts - lts); if (arrowProgress >= 1) arrowProgress = 0; }
+                lts = ts;
+                const p = interpolateOnPath(arrowRouteLatlngs, cum, arrowProgress);
+                arrowMarker.setLatLng([p.lat, p.lng]); arrowMarker.setIcon(makeArrowIcon(p.angleDeg));
+                arrowAnimFrameId = requestAnimationFrame(loop);
             }
-            animate();
-            return polyline;
+            arrowAnimFrameId = requestAnimationFrame(loop);
         }
-        function filterItems(inputId, listId) { /* same */
-            const input = document.getElementById(inputId); const list = document.getElementById(listId); const items = Array.from(list.getElementsByTagName("li")); const filter = input.value.toLowerCase(); items.forEach(item => item.style.display = "none"); if (!filter) { items.forEach(item => item.style.display = ""); return; } items.forEach(item => { const text = item.textContent.toLowerCase(); if (text.startsWith(filter)) item.style.display = ""; }); items.forEach(item => { const text = item.textContent.toLowerCase(); if (!text.startsWith(filter) && text.includes(filter)) item.style.display = ""; });
+        function stopArrowAnimation() {
+            if (arrowAnimFrameId) { cancelAnimationFrame(arrowAnimFrameId); arrowAnimFrameId = null; }
+            if (arrowMarker) { campusMap.removeLayer(arrowMarker); arrowMarker = null; }
+            arrowRouteLatlngs = []; arrowProgress = 0;
         }
-        function showList(listId) {
-            document.querySelectorAll(".dropdown").forEach(list => list.style.display = "none");
-            document.getElementById(listId).style.display = "block";
+
+        // ══ SIDEBAR ══
+        function openSidebar() { document.getElementById('sideMenu').classList.add('open'); document.getElementById('overlay').classList.add('active'); document.body.style.overflow = 'hidden'; setTimeout(() => document.getElementById('closeBtn').focus(), 100); }
+        function closeSidebar() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.style.overflow = ''; }
+
+        function createStartIcon() { return L.divIcon({ className: 'start-marker-icon', html: `<svg width="30" height="30" viewBox="0 0 34 34"><circle cx="15" cy="15" r="14" fill="#000000"/><circle cx="15" cy="15" r="9.5" fill="#ffffff"/></svg>`, iconSize: [30, 30], iconAnchor: [17, 17], popupAnchor: [0, -18] }); }
+        function createEndIcon() { return L.divIcon({ className: 'end-marker-icon', html: `<svg width="25" height="32" viewBox="0 0 30 42"><path d="M15 0 C6.7 0 0 6.7 0 15 C0 26 15 42 15 42 C15 42 30 26 30 15 C30 6.7 23.3 0 15 0Z" fill="#e53935"/><circle cx="15" cy="15" r="6.5" fill="#b71c1c"/><circle cx="15" cy="15" r="3" fill="#ffffff"/></svg>`, iconSize: [30, 42], iconAnchor: [15, 42], popupAnchor: [0, -44] }); }
+
+        function animatedPolyline(ll, opts, dur = 3000) {
+            const pl = L.polyline([], opts), st = Date.now(), tot = ll.length;
+            function animate() {
+                const el = Date.now() - st, prog = Math.min(el / dur, 1), pts = Math.floor(prog * tot);
+                if (pts > 0) { const part = ll.slice(0, pts); if (prog < 1 && pts < tot) { const s = (prog * tot) - pts, c = ll[pts - 1], n = ll[pts]; part.push([c[0] + (n[0] - c[0]) * s, c[1] + (n[1] - c[1]) * s]); } pl.setLatLngs(part); }
+                if (prog < 1) animationFrameId = requestAnimationFrame(animate);
+            }
+            animate(); return pl;
         }
+
+        function filterItems(iid, lid) {
+            const inp = document.getElementById(iid), lst = document.getElementById(lid), items = Array.from(lst.getElementsByTagName('li')), f = inp.value.toLowerCase();
+            items.forEach(i => i.style.display = 'none');
+            if (!f) { items.forEach(i => i.style.display = ''); return; }
+            items.forEach(i => { if (i.textContent.toLowerCase().startsWith(f)) i.style.display = ''; });
+            items.forEach(i => { if (!i.textContent.toLowerCase().startsWith(f) && i.textContent.toLowerCase().includes(f)) i.style.display = ''; });
+        }
+        function showList(lid) { document.querySelectorAll('.dropdown').forEach(l => l.style.display = 'none'); document.getElementById(lid).style.display = 'block'; }
         function setupSwapButton() {
-            const swapIcon = document.querySelector(".swapbox");
-            if (swapIcon) {
-                swapIcon.addEventListener("click", () => {
-                    const fromBox = document.getElementById("fromBox"), toBox = document.getElementById("toBox");
-                    [fromBox.value, toBox.value] = [toBox.value, fromBox.value];
-                    swapIcon.classList.add("rotate-once");
-                    swapIcon.addEventListener("animationend", () => swapIcon.classList.remove("rotate-once"), { once: true });
+            const sw = document.querySelector('.swapbox');
+            if (sw) {
+                sw.addEventListener('click', () => {
+                    const fb = document.getElementById('fromBox');
+                    const tb = document.getElementById('toBox');
+
+                    // Swap values
+                    [fb.value, tb.value] = [tb.value, fb.value];
+
+                    // Toggle rotation — no more animation class mess
+                    sw.classList.toggle('flipped');
                 });
             }
         }
         function clearRoute() {
-            document.getElementById("fromBox").value = "";
-            document.getElementById("toBox").value = "";
-            document.querySelectorAll(".dropdown").forEach(list => list.style.display = "none");
-            isNavigating = false; currentDestination = null; fullRoutePath = [];
-            currentPathIndices = [];
-            const navPanel = document.getElementById('navInfoPanel');
-            if (navPanel) navPanel.classList.remove('active');
+            document.getElementById('fromBox').value = ''; document.getElementById('toBox').value = '';
+            document.querySelectorAll('.dropdown').forEach(l => l.style.display = 'none');
+            isNavigating = false; currentDestination = null; fullRoutePath = []; currentPathIndices = []; activeRouteIndex = 0;
+            clearRouteInfoPanels(); stopArrowAnimation();
             if (campusMap) clearRoutes();
         }
-        function setupGlobalClickHandler() { /* same */
-            document.addEventListener("click", function (e) {
-                if (e.target.tagName === "LI" && e.target.closest(".dropdown")) {
-                    const input = e.target.closest(".input-wrapper").querySelector("input");
-                    if (input) {
-                        input.value = e.target.textContent;
-                        e.target.closest(".dropdown").style.display = "none";
-                    } return;
+        function setupGlobalClickHandler() {
+            document.addEventListener('click', function (e) {
+                if (e.target.tagName === 'LI' && e.target.closest('.dropdown')) {
+                    const inp = e.target.closest('.input-wrapper').querySelector('input');
+                    if (inp) { inp.value = e.target.textContent; e.target.closest('.dropdown').style.display = 'none'; } return;
                 }
-                const isInsideInput = [...document.querySelectorAll(".input-wrapper")].some(wrapper => wrapper.contains(e.target));
-                if (!isInsideInput) { setTimeout(() => { document.querySelectorAll(".dropdown").forEach(list => list.style.display = "none"); }, 100); }
+                const inside = [...document.querySelectorAll('.input-wrapper')].some(w => w.contains(e.target));
+                if (!inside) setTimeout(() => document.querySelectorAll('.dropdown').forEach(l => l.style.display = 'none'), 100);
             });
         }
-        // ---------- MAP & ROUTING (original, but with deviation handling added in geolocation) ----------
+
+        // ══ MAP SETUP ══
         function initializeMap() {
             if (campusMap) { campusMap.invalidateSize(); return; }
-            const campusCenter = L.latLng(11.033114, 77.034342);
-            const campusBounds = L.latLngBounds(L.latLng(11.029847, 77.032077), L.latLng(11.035600, 77.036616));
-            campusMap = L.map('mapContainer', { maxBounds: campusBounds, maxBoundsViscosity: 1.0, minZoom: 17, maxZoom: 19, preferCanvas: true, attributionControl: false }).setView([11.033400, 77.033864], 18);
+            const cb = L.latLngBounds(L.latLng(11.029847, 77.032077), L.latLng(11.035600, 77.036616));
+            campusMap = L.map('mapContainer', { maxBounds: cb, maxBoundsViscosity: 1.0, minZoom: 17, maxZoom: 19, preferCanvas: true, attributionControl: false }).setView([11.033400, 77.033864], 18);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '', updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 2 }).addTo(campusMap);
-            loadCampusData(); initializeLandmarkMarkers(); console.log('Map initialized');
+            loadCampusData(); initializeLandmarkMarkers();
         }
         function loadCampusData() { places = landmarks; graph = JSON.parse(JSON.stringify(graphData)); nodeIndex = new Map(graph.nodes.map((n, i) => [n.id, i])); addLandmarkEntranceNodes(); }
-        function hav(a, b) { const R = 6371000; const toR = x => x * Math.PI / 180; const dLat = toR(b.lat - a.lat); const dLng = toR(b.lng - a.lng); const s = Math.sin(dLat / 2) ** 2 + Math.cos(toR(a.lat)) * Math.cos(toR(b.lat)) * Math.sin(dLng / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(s)); }
-        function nearestPointOnSegment(p, a, b) { const px = p.lng, py = p.lat, ax = a.lng, ay = a.lat, bx = b.lng, by = b.lat; const ABx = bx - ax, ABy = by - ay, APx = px - ax, APy = py - ay; const ABAB = ABx * ABx + ABy * ABy, APAB = APx * ABx + APy * ABy; if (ABAB === 0) return { lat: a.lat, lng: a.lng }; let t = APAB / ABAB; t = Math.max(0, Math.min(1, t)); return { lat: ay + t * ABy, lng: ax + t * ABx }; }
-        function addLandmarkEntranceNodes() { /* same */
+        function hav(a, b) { const R = 6371000, toR = x => x * Math.PI / 180, dLat = toR(b.lat - a.lat), dLng = toR(b.lng - a.lng), s = Math.sin(dLat / 2) ** 2 + Math.cos(toR(a.lat)) * Math.cos(toR(b.lat)) * Math.sin(dLng / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(s)); }
+        function nearestPointOnSegment(p, a, b) { const px = p.lng, py = p.lat, ax = a.lng, ay = a.lat, bx = b.lng, by = b.lat, ABx = bx - ax, ABy = by - ay, APx = px - ax, APy = py - ay, ABAB = ABx * ABx + ABy * ABy, APAB = APx * ABx + APy * ABy; if (ABAB === 0) return { lat: a.lat, lng: a.lng }; const t = Math.max(0, Math.min(1, APAB / ABAB)); return { lat: ay + t * ABy, lng: ax + t * ABx }; }
+        function addLandmarkEntranceNodes() {
             places.forEach(p => {
-                const entId = `ENT_${p.id}`; const entNode = { id: entId, lat: p.lat, lng: p.lng };
-                graph.nodes.push(entNode);
-                let bestDist = Infinity, bestNodeId = null, bestEdge = null, bestPointOnEdge = null;
-                for (let i = 0; i < graph.nodes.length - 1; i++) {
-                    const d = hav(p, graph.nodes[i]);
-                    if (d < bestDist) {
-                        bestDist = d; bestNodeId = graph.nodes[i].id; bestEdge = null;
-                    }
-                }
-                for (const [aId, bId] of graph.edges) {
-                    const aIdx = graph.nodes.findIndex(n => n.id === aId), bIdx = graph.nodes.findIndex(n => n.id === bId); if (aIdx === -1 || bIdx === -1) continue;
-                    const a = graph.nodes[aIdx], b = graph.nodes[bIdx]; const np = nearestPointOnSegment(p, a, b);
-                    const d = hav(p, np); if (d < bestDist) {
-                        bestDist = d; bestEdge = [aId, bId]; bestPointOnEdge = np;
-                        bestNodeId = null;
-                    }
-                }
-                if (bestEdge && bestPointOnEdge) {
-                    const splitNodeId = `SPLIT_${p.id}`;
-                    const splitNode = { id: splitNodeId, lat: bestPointOnEdge.lat, lng: bestPointOnEdge.lng };
-                    graph.nodes.push(splitNode);
-                    const ei = graph.edges.findIndex(e => (e[0] === bestEdge[0] && e[1] === bestEdge[1]) || (e[0] === bestEdge[1] && e[1] === bestEdge[0]));
-                    if (ei !== -1) graph.edges.splice(ei, 1);
-                    graph.edges.push([bestEdge[0], splitNodeId]);
-                    graph.edges.push([splitNodeId, bestEdge[1]]); graph.edges.push([splitNodeId, entId]);
-                } else if (bestNodeId) {
-                    graph.edges.push([bestNodeId, entId]);
-
-                }
+                const eId = `ENT_${p.id}`, eNode = { id: eId, lat: p.lat, lng: p.lng }; graph.nodes.push(eNode);
+                let bd = Infinity, bnId = null, bEdge = null, bPt = null;
+                for (let i = 0; i < graph.nodes.length - 1; i++) { const d = hav(p, graph.nodes[i]); if (d < bd) { bd = d; bnId = graph.nodes[i].id; bEdge = null; } }
+                for (const [aId, bId] of graph.edges) { const ai = graph.nodes.findIndex(n => n.id === aId), bi = graph.nodes.findIndex(n => n.id === bId); if (ai === -1 || bi === -1) continue; const np = nearestPointOnSegment(p, graph.nodes[ai], graph.nodes[bi]), d = hav(p, np); if (d < bd) { bd = d; bEdge = [aId, bId]; bPt = np; bnId = null; } }
+                if (bEdge && bPt) { const sId = `SPLIT_${p.id}`, sNode = { id: sId, lat: bPt.lat, lng: bPt.lng }; graph.nodes.push(sNode); const ei = graph.edges.findIndex(e => (e[0] === bEdge[0] && e[1] === bEdge[1]) || (e[0] === bEdge[1] && e[1] === bEdge[0])); if (ei !== -1) graph.edges.splice(ei, 1); graph.edges.push([bEdge[0], sId], [sId, bEdge[1]], [sId, eId]); }
+                else if (bnId) graph.edges.push([bnId, eId]);
             });
             nodeIndex = new Map(graph.nodes.map((n, i) => [n.id, i]));
         }
-        function buildAdj(removedEdges = new Set(), removedNodes = new Set()) { /* same */
+        function buildAdj(re = new Set(), rn = new Set()) {
             const adj = Array(graph.nodes.length).fill(0).map(() => []);
-            for (const [aiId, biId] of graph.edges) {
-                const ai = nodeIndex.get(aiId), bi = nodeIndex.get(biId);
-                if (ai == null || bi == null) continue;
-                if (removedNodes.has(ai) || removedNodes.has(bi)) continue;
-                const keyAB = `${ai}-${bi}`, keyBA = `${bi}-${ai}`;
-                if (removedEdges.has(keyAB) || removedEdges.has(keyBA)) continue;
-                const a = graph.nodes[ai], b = graph.nodes[bi];
-                const w = hav(a, b); adj[ai].push([bi, w]); adj[bi].push([ai, w]);
-            } return adj;
+            for (const [aiId, biId] of graph.edges) { const ai = nodeIndex.get(aiId), bi = nodeIndex.get(biId); if (ai == null || bi == null) continue; if (rn.has(ai) || rn.has(bi)) continue; if (re.has(`${ai}-${bi}`) || re.has(`${bi}-${ai}`)) continue; const w = hav(graph.nodes[ai], graph.nodes[bi]); adj[ai].push([bi, w]); adj[bi].push([ai, w]); }
+            return adj;
         }
         function dijkstra(adj, src, dst) {
-            const n = adj.length; const dist = Array(n).fill(Infinity);
-            const prev = Array(n).fill(-1);
-            const used = Array(n).fill(false);
-            dist[src] = 0;
-            const pq = [{ d: 0, i: src }];
-            const pop = () => {
-                if (!pq.length) return null;
-                let bi = -1, bd = Infinity;
-                for (let i = 0; i < pq.length; i++)if (pq[i].d < bd) {
-                    bd = pq[i].d; bi = i;
-
-                }
-                return bi < 0 ? null : pq.splice(bi, 1)[0];
-            };
-            while (pq.length) {
-                const cur = pop(); if (!cur) break; const u = cur.i; if (used[u]) continue;
-                used[u] = true;
-                if (u === dst) break;
-                for (const [v, w] of adj[u]) if (!used[v] && dist[u] + w < dist[v]) {
-                    dist[v] = dist[u] + w; prev[v] = u;
-                    pq.push({ d: dist[v], i: v });
-                }
-            } const path = []; let u = dst;
-            if (prev[u] === -1 && u !== src) return { path: [], distance: Infinity };
-            while (u !== -1) { path.push(u); if (u === src) break; u = prev[u]; } path.reverse();
-            return { path, distance: dist[dst] };
+            const n = adj.length, dist = Array(n).fill(Infinity), prev = Array(n).fill(-1), used = Array(n).fill(false);
+            dist[src] = 0; const pq = [{ d: 0, i: src }];
+            const pop = () => { if (!pq.length) return null; let bi = -1, bd = Infinity; for (let i = 0; i < pq.length; i++)if (pq[i].d < bd) { bd = pq[i].d; bi = i; } return bi < 0 ? null : pq.splice(bi, 1)[0]; };
+            while (pq.length) { const cur = pop(); if (!cur) break; const u = cur.i; if (used[u]) continue; used[u] = true; if (u === dst) break; for (const [v, w] of adj[u]) if (!used[v] && dist[u] + w < dist[v]) { dist[v] = dist[u] + w; prev[v] = u; pq.push({ d: dist[v], i: v }); } }
+            const path = []; let u = dst; if (prev[u] === -1 && u !== src) return { path: [], distance: Infinity }; while (u !== -1) { path.push(u); if (u === src) break; u = prev[u]; } path.reverse(); return { path, distance: dist[dst] };
         }
-        function pathDistance(indices) {
-            let d = 0; for (let i = 0; i + 1 < indices.length; i++) d += hav(graph.nodes[indices[i]], graph.nodes[indices[i + 1]]);
-            return d;
-        }
-        function arraysEqual(a, b) {
-            if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++)if (a[i] !== b[i]) return false; return true;
-        }
+        function pathDistance(idx) { let d = 0; for (let i = 0; i + 1 < idx.length; i++)d += hav(graph.nodes[idx[i]], graph.nodes[idx[i + 1]]); return d; }
+        function arraysEqual(a, b) { if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++)if (a[i] !== b[i]) return false; return true; }
         function yensKShortests(i, t, K) {
-            const A = [], B = []; const adj0 = buildAdj(); const p0 = dijkstra(adj0, i, t);
-            if (!p0.path.length || !isFinite(p0.distance)) return A;
-            A.push(p0); for (let k = 1; k < K; k++) {
-                const prevPath = A[k - 1].path;
-                for (let iSeg = 0; iSeg < prevPath.length - 1; iSeg++) {
-                    const spurNode = prevPath[iSeg]; const rootPath = prevPath.slice(0, iSeg + 1);
-                    const removedEdges = new Set(), removedNodes = new Set(); for (const p of A) {
-                        const candidateRoot = p.path.slice(0, iSeg + 1);
-                        if (arraysEqual(candidateRoot, rootPath) && p.path.length > iSeg + 1) { const u = p.path[iSeg], v = p.path[iSeg + 1]; removedEdges.add(`${u}-${v}`); removedEdges.add(`${v}-${u}`); }
-                    } for (const rpNode of rootPath.slice(0, -1)) removedNodes.add(rpNode); const adj = buildAdj(removedEdges, removedNodes); const spurRes = dijkstra(adj, spurNode, t); if (spurRes.path.length && isFinite(spurRes.distance)) { const totalPath = rootPath.slice(0, -1).concat(spurRes.path); const totalDist = pathDistance(totalPath); if (!B.some(b => arraysEqual(b.path, totalPath))) B.push({ path: totalPath, distance: totalDist }); }
-                } if (!B.length) break; B.sort((a, b) => a.distance - b.distance); const best = B.shift(); A.push(best); const uniq = []; for (const p of A) if (!uniq.some(q => arraysEqual(q.path, p.path))) uniq.push(p); uniq.sort((a, b) => a.distance - b.distance); A.splice(0, A.length, ...uniq);
+            const A = [], B = [], adj0 = buildAdj(), p0 = dijkstra(adj0, i, t);
+            if (!p0.path.length || !isFinite(p0.distance)) return A; A.push(p0);
+            for (let k = 1; k < K; k++) {
+                const pp = A[k - 1].path;
+                for (let iS = 0; iS < pp.length - 1; iS++) {
+                    const sn = pp[iS], rp = pp.slice(0, iS + 1), re = new Set(), rn = new Set();
+                    for (const p of A) { const cr = p.path.slice(0, iS + 1); if (arraysEqual(cr, rp) && p.path.length > iS + 1) { const u = p.path[iS], v = p.path[iS + 1]; re.add(`${u}-${v}`); re.add(`${v}-${u}`); } }
+                    for (const r of rp.slice(0, -1)) rn.add(r);
+                    const adj = buildAdj(re, rn), sr = dijkstra(adj, sn, t);
+                    if (sr.path.length && isFinite(sr.distance)) { const tp = rp.slice(0, -1).concat(sr.path), td = pathDistance(tp); if (!B.some(b => arraysEqual(b.path, tp))) B.push({ path: tp, distance: td }); }
+                }
+                if (!B.length) break; B.sort((a, b) => a.distance - b.distance); A.push(B.shift());
+                const uniq = []; for (const p of A) if (!uniq.some(q => arraysEqual(q.path, p.path))) uniq.push(p); uniq.sort((a, b) => a.distance - b.distance); A.splice(0, A.length, ...uniq);
             } return A;
         }
-        function clearRoutes() { if (animationFrameId) { cancelAnimationFrame(animationFrameId); animationFrameId = null; } if (routeLayerGroup) { campusMap.removeLayer(routeLayerGroup); routeLayerGroup = null; } if (startMarker) { campusMap.removeLayer(startMarker); startMarker = null; } if (endMarker) { campusMap.removeLayer(endMarker); endMarker = null; } }
+
+        function clearRoutes() {
+            if (animationFrameId) { cancelAnimationFrame(animationFrameId); animationFrameId = null; }
+            if (routeLayerGroup) { campusMap.removeLayer(routeLayerGroup); routeLayerGroup = null; }
+            if (startMarker) { campusMap.removeLayer(startMarker); startMarker = null; }
+            if (endMarker) { campusMap.removeLayer(endMarker); endMarker = null; }
+            stopArrowAnimation();
+        }
         function setStartEndMarkers(A, B) {
-            if (startMarker) { campusMap.removeLayer(startMarker); startMarker = null; } if (endMarker) { campusMap.removeLayer(endMarker); endMarker = null; }
-            startMarker = L.marker([A.lat, A.lng], { icon: createStartIcon(), zIndexOffset: 900 }).addTo(campusMap).bindPopup(`<strong style="font-size:14px;">Start:</strong><br/>${A.name}`);
-            endMarker = L.marker([B.lat, B.lng], { icon: createEndIcon(), zIndexOffset: 1000 }).addTo(campusMap).bindPopup(`<strong style="font-size:14px;">Destination:</strong><br/>${B.name}`).openPopup();
-        }
-        // ----- NAVIGATION & DEVIATION HANDLING (enhanced) -----
-        function updateNavigationInfo(remainingDistance) {
-            const navPanel = document.getElementById('navInfoPanel');
-            const distanceEl = document.getElementById('navDistance');
-            const timeEl = document.getElementById('navTime');
-            if (!navPanel || !distanceEl || !timeEl) return;
-
-            navPanel.classList.add('active');
-
-            // Show distance in meters (rounded)
-            const meters = Math.round(remainingDistance);
-            distanceEl.textContent = `${meters} M`;
-
-            // Walking time (1.4 m/s)
-            const mins = Math.round((remainingDistance / 1.4) / 60);
-            timeEl.textContent = `${mins} Minutes`;
-
-            // If very close, show arrival message and auto‑hide after 3s
-            if (remainingDistance < 10) {
-                distanceEl.textContent = 'Arrived!';
-                timeEl.textContent = 'You have reached your destination';
-                setTimeout(() => {
-                    navPanel.classList.remove('active');
-                }, 3000);
-            }
+            if (startMarker) { campusMap.removeLayer(startMarker); startMarker = null; }
+            if (endMarker) { campusMap.removeLayer(endMarker); endMarker = null; }
+            startMarker = L.marker([A.lat, A.lng], { icon: createStartIcon(), zIndexOffset: 900 }).addTo(campusMap).bindPopup(`<strong>Start:</strong><br/>${A.name}`);
+            endMarker = L.marker([B.lat, B.lng], { icon: createEndIcon(), zIndexOffset: 1000 }).addTo(campusMap).bindPopup(`<strong>Destination:</strong><br/>${B.name}`).openPopup();
         }
 
-        // DEVIATION DETECTION + RECALCULATION
-        function checkDeviationAndRecalc(userPos) {
-            if (!isNavigating || !currentDestination || !userPos) return false;
-            // if no remaining nodes -> do nothing
-            if (!currentPathIndices || currentPathIndices.length === 0) return false;
-
-            // find closest point on remaining route
-            let minDistToRoute = Infinity;
-            for (let i = 0; i < currentPathIndices.length; i++) {
-                const node = graph.nodes[currentPathIndices[i]];
-                const d = hav(userPos, node);
-                if (d < minDistToRoute) minDistToRoute = d;
-            }
-            // also check segments for more accuracy
-            for (let i = 0; i < currentPathIndices.length - 1; i++) {
-                const a = graph.nodes[currentPathIndices[i]];
-                const b = graph.nodes[currentPathIndices[i + 1]];
-                const nearest = nearestPointOnSegment(userPos, a, b);
-                const d = hav(userPos, nearest);
-                if (d < minDistToRoute) minDistToRoute = d;
-            }
-
-            // if too far from route -> DEVIATION
-            if (minDistToRoute > DEVIATION_THRESHOLD) {
-                console.log(`Deviation detected (${minDistToRoute.toFixed(1)}m). Recalculating...`);
-                recalcRouteFromCurrent();
-                return true;
-            }
-            return false;
+        // ══ NAVIGATION ══
+        function checkDeviationAndRecalc(up) {
+            if (!isNavigating || !currentDestination || !up || !currentPathIndices || !currentPathIndices.length) return false;
+            let mn = Infinity;
+            for (let i = 0; i < currentPathIndices.length; i++) { const d = hav(up, graph.nodes[currentPathIndices[i]]); if (d < mn) mn = d; }
+            for (let i = 0; i < currentPathIndices.length - 1; i++) { const d = hav(up, nearestPointOnSegment(up, graph.nodes[currentPathIndices[i]], graph.nodes[currentPathIndices[i + 1]])); if (d < mn) mn = d; }
+            if (mn > DEVIATION_THRESHOLD) { recalcRouteFromCurrent(); return true; } return false;
         }
-
         function recalcRouteFromCurrent() {
             if (!isNavigating || !userLatLng || !currentDestination) return;
-            const userPos = { lat: userLatLng[0], lng: userLatLng[1] };
-            // find nearest graph node
-            let nearestNodeIdx = null, minDist = Infinity;
-            graph.nodes.forEach((node, idx) => {
-                const d = hav(userPos, node);
-                if (d < minDist) { minDist = d; nearestNodeIdx = idx; }
-            });
-            if (nearestNodeIdx === null) return;
-            const destNodeId = nodeIndex.get(`ENT_${currentDestination.id}`);
-            if (destNodeId === undefined) return;
-            const results = yensKShortests(nearestNodeIdx, destNodeId, KROUTES);
-            if (!results.length) return;
-            lastResults = results;
-            // update full path and remaining indices
-            fullRoutePath = results[0].path.map(i => [graph.nodes[i].lat, graph.nodes[i].lng]);
-            currentPathIndices = results[0].path.slice(); // fresh remaining nodes
-            // update start marker to current location
-            setStartEndMarkers(
-                { lat: userLatLng[0], lng: userLatLng[1], name: 'Your Location' },
-                currentDestination
-            );
-            renderDynamicRoute(); // redraw path with new remaining path
-            const remainingDist = pathDistance(currentPathIndices);
-            updateNavigationInfo(remainingDist);
+            const up = { lat: userLatLng[0], lng: userLatLng[1] };
+            let nnIdx = null, md = Infinity; graph.nodes.forEach((n, i) => { const d = hav(up, n); if (d < md) { md = d; nnIdx = i; } });
+            if (nnIdx === null) return;
+            const dId = nodeIndex.get(`ENT_${currentDestination.id}`); if (dId === undefined) return;
+            const res = yensKShortests(nnIdx, dId, KROUTES); if (!res.length) return;
+            lastResults = res; activeRouteIndex = 0;
+            fullRoutePath = res[0].path.map(i => [graph.nodes[i].lat, graph.nodes[i].lng]);
+            currentPathIndices = res[0].path.slice();
+            setStartEndMarkers({ lat: userLatLng[0], lng: userLatLng[1], name: 'Your Location' }, currentDestination);
+            renderDynamicRoute();
+            if (isMobile()) updateMobileRouteInfo(pathDistance(currentPathIndices));
+            else renderDesktopRouteStack(res, 0);
         }
-
-        // Dynamic trim of passed nodes + check deviation
         function updatePathBasedOnLocation() {
-            if (!isNavigating || !userLatLng || !currentDestination || currentPathIndices.length === 0) {
-                return;
-            }
-            const now = Date.now();
-            if (now - lastUpdateTime < UPDATE_THRESHOLD) { return; }
-            lastUpdateTime = now;
-
-            const userPos = { lat: userLatLng[0], lng: userLatLng[1] };
-
-            // 1) DEVIATION DETECTION
-            if (checkDeviationAndRecalc(userPos)) {
-                return; // recalc already triggered new route
-            }
-
-            // 2) Trim passed nodes (if close enough to a node)
-            let closestIndex = 0;
-            let minDist = Infinity;
-            for (let i = 0; i < currentPathIndices.length; i++) {
-                const nodeIdx = currentPathIndices[i];
-                const node = graph.nodes[nodeIdx];
-                const dist = hav(userPos, node);
-                if (dist < minDist) {
-                    minDist = dist;
-                    closestIndex = i;
-                }
-            }
-
-            if (minDist < PROXIMITY_THRESHOLD && closestIndex > 0) {
-                console.log(`Passed waypoint ${closestIndex}, trimming route.`);
-                currentPathIndices = currentPathIndices.slice(closestIndex);
-                const remainingDistance = pathDistance(currentPathIndices);
-                updateNavigationInfo(remainingDistance);
-                renderDynamicRoute(); // redraw shorter path
-            } else {
-                // Just update distance
-                const remainingDistance = pathDistance(currentPathIndices);
-                updateNavigationInfo(remainingDistance);
-            }
+            if (!isNavigating || !userLatLng || !currentDestination || !currentPathIndices.length) return;
+            const now = Date.now(); if (now - lastUpdateTime < UPDATE_THRESHOLD) return; lastUpdateTime = now;
+            const up = { lat: userLatLng[0], lng: userLatLng[1] };
+            if (checkDeviationAndRecalc(up)) return;
+            let ci = 0, md = Infinity;
+            for (let i = 0; i < currentPathIndices.length; i++) { const d = hav(up, graph.nodes[currentPathIndices[i]]); if (d < md) { md = d; ci = i; } }
+            if (md < PROXIMITY_THRESHOLD && ci > 0) { currentPathIndices = currentPathIndices.slice(ci); renderDynamicRoute(); }
+            if (isMobile()) updateMobileRouteInfo(pathDistance(currentPathIndices));
         }
-
         function renderDynamicRoute() {
-            if (!isNavigating || currentPathIndices.length === 0) return;
+            if (!isNavigating || !currentPathIndices.length) return;
             if (routeLayerGroup) { campusMap.removeLayer(routeLayerGroup); routeLayerGroup = null; }
-            const layers = [];
-            const latlngs = currentPathIndices.map(i => [graph.nodes[i].lat, graph.nodes[i].lng]);
-            const border = L.polyline(latlngs, { color: '#ffffff', weight: 10, opacity: 0.9, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 });
-            const route = L.polyline(latlngs, { color: '#1967d2', weight: 6, opacity: 1, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 });
-            layers.push(border, route);
-            routeLayerGroup = L.layerGroup(layers).addTo(campusMap);
-            // update start marker to current location (already set elsewhere)
+            const ll = currentPathIndices.map(i => [graph.nodes[i].lat, graph.nodes[i].lng]);
+            const border = L.polyline(ll, { color: '#ffffff', weight: 10, opacity: 0.9, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 });
+            const route = L.polyline(ll, { color: '#1967d2', weight: 6, opacity: 1, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 });
+            routeLayerGroup = L.layerGroup([border, route]).addTo(campusMap);
+            startArrowAnimation(ll, arrowProgress);
         }
 
         function renderSelectedRoute(selectedIndex) {
             const results = lastResults; if (!results || !results.length) return;
-            clearRoutes();
+            activeRouteIndex = selectedIndex; clearRoutes();
             const layers = [];
-            results.forEach((res, idx) => { /* ... original alt routes ... */
-                const latlngs = res.path.map(i => [graph.nodes[i].lat, graph.nodes[i].lng]);
+            results.forEach((res, idx) => {
+                const ll = res.path.map(i => [graph.nodes[i].lat, graph.nodes[i].lng]);
                 if (idx !== selectedIndex) {
-                    const altBorder = L.polyline(latlngs, { color: '#ffffff', weight: 7, opacity: 0.8, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 });
-                    const alt = L.polyline(latlngs, { color: '#8ab4f8', weight: 5.5, opacity: 0.7, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 });
-                    alt.on('click', () => renderSelectedRoute(idx));
-                    layers.push(altBorder, alt);
+                    const ab = L.polyline(ll, { color: '#ffffff', weight: 7, opacity: 0.8, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 });
+                    const al = L.polyline(ll, { color: '#8ab4f8', weight: 5.5, opacity: 0.7, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 });
+                    al.on('click', () => renderSelectedRoute(idx)); layers.push(ab, al);
                 }
             });
-            const selectedLatlngs = results[selectedIndex].path.map(i => [graph.nodes[i].lat, graph.nodes[i].lng]);
-            const selectedBorder = animatedPolyline(selectedLatlngs, { color: '#ffffff', weight: 10, opacity: 0.9, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 }, 1500);
-            const primaryRoute = animatedPolyline(selectedLatlngs, { color: '#1967d2', weight: 6, opacity: 1, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 }, 1500);
-            layers.push(selectedBorder, primaryRoute);
-            routeLayerGroup = L.layerGroup(layers).addTo(campusMap);
-            const fromVal = document.getElementById('fromBox').value;
-            if (fromVal === 'Current Location') {
-                fullRoutePath = selectedLatlngs;
-                currentPathIndices = results[selectedIndex].path.slice(); // store remaining node indices
-                const meters = results[selectedIndex].distance;
-                updateNavigationInfo(meters);
-            }
-            const toVal = document.getElementById('toBox').value;
+            const sll = results[selectedIndex].path.map(i => [graph.nodes[i].lat, graph.nodes[i].lng]);
+            const sb = animatedPolyline(sll, { color: '#ffffff', weight: 10, opacity: 0.9, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 }, 1500);
+            const pr = animatedPolyline(sll, { color: '#1967d2', weight: 6, opacity: 1, lineCap: 'round', lineJoin: 'round', smoothFactor: 1.0 }, 1500);
+            layers.push(sb, pr); routeLayerGroup = L.layerGroup(layers).addTo(campusMap);
+            setTimeout(() => startArrowAnimation(sll, 0), 1600);
+            if (document.getElementById('fromBox').value === 'Current Location') { fullRoutePath = sll; currentPathIndices = results[selectedIndex].path.slice(); }
+            const fv = document.getElementById('fromBox').value, tv = document.getElementById('toBox').value;
             let A, B;
-            if (fromVal === 'Current Location' && userLatLng) A = { lat: userLatLng[0], lng: userLatLng[1], name: 'Your Location' };
-            else A = getLandmarkByNameOrId(fromVal);
-            B = getLandmarkByNameOrId(toVal);
+            if (fv === 'Current Location' && userLatLng) A = { lat: userLatLng[0], lng: userLatLng[1], name: 'Your Location' }; else A = getLandmarkByNameOrId(fv);
+            B = getLandmarkByNameOrId(tv);
             if (A && B) setStartEndMarkers(A, B);
-            if (primaryRoute) { setTimeout(() => { campusMap.fitBounds(L.polyline(selectedLatlngs).getBounds().pad(0.2)); }, 100); }
-            const meters = results[selectedIndex].distance; const mins = Math.round((meters / 1.4) / 60); const km = (meters / 1000).toFixed(2); console.log(`Route selected: ${mins} min • ${km} km`);
-
-            // *** NEW: Show distance and time for any selected route ***
-            updateNavigationInfo(results[selectedIndex].distance);
+            if (pr) setTimeout(() => campusMap.fitBounds(L.polyline(sll).getBounds().pad(0.2)), 100);
+            const dist = results[selectedIndex].distance;
+            if (isMobile()) updateMobileRouteInfo(dist);
+            else renderDesktopRouteStack(results, selectedIndex);
         }
 
-        function getLandmarkByNameOrId(name) { if (name === 'Current Location') return null; const lid = landmarkMapping[name]; if (lid) return places.find(p => p.id === lid); return places.find(p => p.name === name); }
+        function getLandmarkByNameOrId(name) {
+            if (name === 'Current Location') return null;
+            const lid = landmarkMapping[name]; if (lid) return places.find(p => p.id === lid);
+            return places.find(p => p.name === name);
+        }
 
         function searchRoute() {
-            const fromLocation = document.getElementById('fromBox').value;
-            const toLocation = document.getElementById('toBox').value;
-            if (!fromLocation || !toLocation) { alert('Please select both From and To locations'); return; }
+            const fl = document.getElementById('fromBox').value, tl = document.getElementById('toBox').value;
+            if (!fl || !tl) { alert('Please select both From and To locations'); return; }
             if (!campusMap) { initializeMap(); return; }
-            startGeolocation(); // always watch
-            if (fromLocation === 'Current Location') {
+            startGeolocation();
+            if (fl === 'Current Location') {
                 if (!userLatLng) {
                     alert('Waiting for your location... Please allow location access.');
-                    navigator.geolocation.getCurrentPosition((pos) => { userLatLng = [pos.coords.latitude, pos.coords.longitude]; searchRoute(); }, (err) => { alert('Could not get your current location.'); }); return;
-                }
-                const B = getLandmarkByNameOrId(toLocation);
-                if (!B) {
-                    alert('Invalid destination selected');
+                    navigator.geolocation.getCurrentPosition(pos => { userLatLng = [pos.coords.latitude, pos.coords.longitude]; searchRoute(); }, () => alert('Could not get your current location.'));
                     return;
                 }
+                const B = getLandmarkByNameOrId(tl); if (!B) { alert('Invalid destination'); return; }
                 isNavigating = true; currentDestination = B;
-                const userPos = { lat: userLatLng[0], lng: userLatLng[1] };
-                let nearestNodeId = null, minDist = Infinity;
-                graph.nodes.forEach((node, idx) => { const d = hav(userPos, node); if (d < minDist) { minDist = d; nearestNodeId = idx; } });
-                if (nearestNodeId === null) {
-                    alert('Could not connect your location to campus network');
-                    isNavigating = false; 
-                    return;
-                }
-                const destNodeId = nodeIndex.get(`ENT_${B.id}`);
-                if (destNodeId === undefined) {
-                    alert('Cannot find destination entrance node');
-                    isNavigating = false; return;
-                }
-                const results = yensKShortests(nearestNodeId, destNodeId, KROUTES);
-                if (!results.length) {
-                    alert('No path found from your current location.');
-                    isNavigating = false;
-                    return;
-                }
-                lastResults = results;
+                const up = { lat: userLatLng[0], lng: userLatLng[1] };
+                let nnId = null, md = Infinity; graph.nodes.forEach((n, i) => { const d = hav(up, n); if (d < md) { md = d; nnId = i; } });
+                if (nnId === null) { alert('Could not connect to campus network'); isNavigating = false; return; }
+                const dId = nodeIndex.get(`ENT_${B.id}`); if (dId === undefined) { alert('Cannot find destination'); isNavigating = false; return; }
+                const res = yensKShortests(nnId, dId, KROUTES); if (!res.length) { alert('No path found'); isNavigating = false; return; }
+                lastResults = res; activeRouteIndex = 0;
                 setStartEndMarkers({ lat: userLatLng[0], lng: userLatLng[1], name: 'Your Location' }, B);
                 renderSelectedRoute(0);
-            } else { /* static route, navigation off */
-                isNavigating = false;
-                currentDestination = null;
-                document.getElementById('navInfoPanel')?.classList.remove('active');
-                const A = getLandmarkByNameOrId(fromLocation), B = getLandmarkByNameOrId(toLocation);
-                if (!A || !B) {
-                    alert('Invalid location selected');
-                    return;
-                }
+            } else {
+                isNavigating = false; currentDestination = null;
+                const A = getLandmarkByNameOrId(fl), B = getLandmarkByNameOrId(tl);
+                if (!A || !B) { alert('Invalid location selected'); return; }
                 const si = nodeIndex.get(`ENT_${A.id}`), ti = nodeIndex.get(`ENT_${B.id}`);
-                if (si === undefined || ti === undefined) {
-                    alert('Cannot find entrance nodes');
-                    return;
-                }
-                const results = yensKShortests(si, ti, KROUTES);
-                if (!results.length) {
-                    alert('No path found');
-                    return;
-                }
-                lastResults = results;
+                if (si === undefined || ti === undefined) { alert('Cannot find entrance nodes'); return; }
+                const res = yensKShortests(si, ti, KROUTES); if (!res.length) { alert('No path found'); return; }
+                lastResults = res; activeRouteIndex = 0;
                 setStartEndMarkers(A, B); renderSelectedRoute(0);
             }
         }
 
-        function initializeLandmarkMarkers() { /* same as original */
+        function initializeLandmarkMarkers() {
             if (landmarkMarkersLayer) campusMap.removeLayer(landmarkMarkersLayer);
             landmarkMarkersLayer = L.layerGroup().addTo(campusMap);
             locationmarker.forEach(place => {
-                const icon = L.divIcon({ className: 'custom-landmark-marker', html: `<div style="width:33px; height:33px; background:#e8f0fe; border:1.5px solid #1a73e8; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; box-shadow:0 2px 6px rgba(0,0,0,0.3); cursor:pointer;">${place.icon || '📍'}</div>`, iconSize: [33, 33], iconAnchor: [18, 18], popupAnchor: [0, -18] });
-                const marker = L.marker([place.lat, place.lng], { icon: icon, title: place.name });
-                let popupContent = place.name === 'E Block' ? `<strong style="font-size:14px;"><a href="#" class="location-link" onclick="openSidebar(); return false;">${place.name}</a></strong>` : `<strong style="font-size:14px;">${place.name}</strong>`;
-                marker.bindPopup(popupContent).addTo(landmarkMarkersLayer);
-            }); console.log(`Initialized ${locationmarker.length} landmark markers`);
+                const icon = L.divIcon({ className: 'custom-landmark-marker', html: `<div style="width:33px;height:33px;background:#e8f0fe;border:1.5px solid #1a73e8;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;">${place.icon || '📍'}</div>`, iconSize: [33, 33], iconAnchor: [18, 18], popupAnchor: [0, -18] });
+                const marker = L.marker([place.lat, place.lng], { icon, title: place.name });
+                const pc = place.name === 'E Block' ? `<strong style="font-size:14px;"><a href="#" class="location-link" onclick="openSidebar();return false;">${place.name}</a></strong>` : `<strong style="font-size:14px;">${place.name}</strong>`;
+                marker.bindPopup(pc).addTo(landmarkMarkersLayer);
+            });
         }
         function toggleLandmarks() {
             if (!landmarkMarkersLayer) return;
             const btn = document.getElementById('landmarkToggleBtn');
-            if (landmarksVisible) {
-                campusMap.removeLayer(landmarkMarkersLayer);
-                landmarksVisible = false; 
-                btn.classList.add('inactive');
-            }
-            else {
-                campusMap.addLayer(landmarkMarkersLayer);
-                landmarksVisible = true;
-                btn.classList.remove('inactive');
-            }
+            if (landmarksVisible) { campusMap.removeLayer(landmarkMarkersLayer); landmarksVisible = false; btn.classList.add('inactive'); }
+            else { campusMap.addLayer(landmarkMarkersLayer); landmarksVisible = true; btn.classList.remove('inactive'); }
         }
         function startGeolocation() {
-            if (!navigator.geolocation) {
-                alert("Geolocation not supported");
-                return;
-            } if (userWatchId) navigator.geolocation.clearWatch(userWatchId); 
+            if (!navigator.geolocation) { alert('Geolocation not supported'); return; }
+            if (userWatchId) navigator.geolocation.clearWatch(userWatchId);
             userWatchId = navigator.geolocation.watchPosition(geolocationSuccess, geolocationError, { enableHighAccuracy: true, maximumAge: 1000, timeout: 5000 });
         }
         function geolocationSuccess(pos) {
-            const lat = pos.coords.latitude, lng = pos.coords.longitude, accuracy = pos.coords.accuracy;
+            const lat = pos.coords.latitude, lng = pos.coords.longitude, acc = pos.coords.accuracy;
             userLatLng = [lat, lng];
             if (userLocationMarker) campusMap.removeLayer(userLocationMarker);
             if (accuracyCircle) campusMap.removeLayer(accuracyCircle);
             userLocationMarker = L.circleMarker(userLatLng, { radius: 10, fillColor: '#4285F4', color: '#ffffff', weight: 3, opacity: 1, fillOpacity: 0.8, zIndexOffset: 1100 }).addTo(campusMap);
-            accuracyCircle = L.circle(userLatLng, { radius: accuracy, fillColor: '#4285F4', color: '#4285F4', weight: 1, opacity: 0.3, fillOpacity: 0.1 }).addTo(campusMap);
-            // DYNAMIC PATH UPDATE + DEVIATION DETECTION
-            if (isNavigating) {
-                updatePathBasedOnLocation(); // inside, deviation detection & trim
-            }
-            console.log(`Location: ${lat.toFixed(6)}, ${lng.toFixed(6)} - Accuracy: ${accuracy.toFixed(0)}m`);
+            accuracyCircle = L.circle(userLatLng, { radius: acc, fillColor: '#4285F4', color: '#4285F4', weight: 1, opacity: 0.3, fillOpacity: 0.1 }).addTo(campusMap);
+            if (isNavigating) updatePathBasedOnLocation();
         }
-        function geolocationError(err) {
-            console.error('Geolocation error:', err); 
-            alert("Location error");
-        }
-        function centerOnUserLocation() {
-            if (userLatLng) campusMap.setView(userLatLng, 18); 
-            else startGeolocation();
-        }
+        function geolocationError(err) { console.error('Geolocation error:', err); }
+        function centerOnUserLocation() { if (userLatLng) campusMap.setView(userLatLng, 18); else startGeolocation(); }
 
-        // DOMContentLoaded
+        // ══ INIT ══
         document.addEventListener('DOMContentLoaded', function () {
-            const fromList = document.getElementById('fromList'), toList = document.getElementById('toList');
-            locationsList.forEach(location => { let li1 = document.createElement('li'); li1.textContent = location; fromList.appendChild(li1); let li2 = document.createElement('li'); li2.textContent = location; toList.appendChild(li2); });
+            const fl = document.getElementById('fromList'), tl = document.getElementById('toList');
+            locationsList.forEach(loc => {
+                let l1 = document.createElement('li'); l1.textContent = loc; fl.appendChild(l1);
+                let l2 = document.createElement('li'); l2.textContent = loc; tl.appendChild(l2);
+            });
             initializeMap(); setupSwapButton(); setupGlobalClickHandler(); setupSidebarHandlers();
-            const currentLocBtn = document.getElementById('currentLocationBtn'); if (currentLocBtn) currentLocBtn.addEventListener('click', centerOnUserLocation);
-            const landmarkToggleBtn = document.getElementById('landmarkToggleBtn'); if (landmarkToggleBtn) landmarkToggleBtn.addEventListener('click', toggleLandmarks);
-            console.log('Campus Navigation System initialized');
+            document.getElementById('currentLocationBtn')?.addEventListener('click', centerOnUserLocation);
+            document.getElementById('landmarkToggleBtn')?.addEventListener('click', toggleLandmarks);
         });
-        function setupSidebarHandlers() { /* original */
-            const sideMenu = document.getElementById('sideMenu'), overlay = document.getElementById('overlay'), closeBtn = document.getElementById('closeBtn');
-            closeBtn.addEventListener('click', function (e) { e.stopPropagation(); closeSidebar(); });
-            overlay.addEventListener('click', function () { closeSidebar(); });
-            sideMenu.addEventListener('click', function (e) { e.stopPropagation(); });
-            document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && sideMenu.classList.contains('open')) closeSidebar(); });
-            let resizeTimer; window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(function () { if (window.innerWidth > 768 && sideMenu.classList.contains('open')) closeSidebar(); }, 250); });
-            const details = document.querySelectorAll('.accordion-item'); details.forEach(detail => { detail.addEventListener('toggle', function () { if (this.open) { setTimeout(() => { this.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 300); } }); });
-            let touchStartX = 0, touchEndX = 0; sideMenu.addEventListener('touchstart', function (e) { touchStartX = e.changedTouches[0].screenX; }, { passive: true }); sideMenu.addEventListener('touchend', function (e) { touchEndX = e.changedTouches[0].screenX; if ((touchEndX - touchStartX) > 50) closeSidebar(); }, { passive: true }); sideMenu.addEventListener('transitionend', function () { if (sideMenu.classList.contains('open')) { const items = document.querySelectorAll('.accordion-item'); items.forEach((item, index) => setTimeout(() => { item.style.animation = 'fadeIn 0.3s ease forwards'; }, index * 50)); } });
-        } 
-        // expose openSidebar for E block popup999
+
+        function setupSidebarHandlers() {
+            const sm = document.getElementById('sideMenu'), ov = document.getElementById('overlay'), cb = document.getElementById('closeBtn');
+            cb.addEventListener('click', e => { e.stopPropagation(); closeSidebar(); });
+            ov.addEventListener('click', closeSidebar); sm.addEventListener('click', e => e.stopPropagation());
+            document.addEventListener('keydown', e => { if (e.key === 'Escape' && sm.classList.contains('open')) closeSidebar(); });
+            let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (window.innerWidth > 768 && sm.classList.contains('open')) closeSidebar(); }, 250); });
+            document.querySelectorAll('.accordion-item').forEach(d => { d.addEventListener('toggle', function () { if (this.open) setTimeout(() => this.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 300); }); });
+            let tsx = 0, tex = 0;
+            sm.addEventListener('touchstart', e => { tsx = e.changedTouches[0].screenX; }, { passive: true });
+            sm.addEventListener('touchend', e => { tex = e.changedTouches[0].screenX; if (tex - tsx > 50) closeSidebar(); }, { passive: true });
+            sm.addEventListener('transitionend', () => { if (sm.classList.contains('open')) document.querySelectorAll('.accordion-item').forEach((item, i) => setTimeout(() => { item.style.animation = 'fadeIn 0.3s ease forwards'; }, i * 50)); });
+        }
         window.openSidebar = openSidebar;
     </script>
 </body>
