@@ -22,6 +22,7 @@
             flex-direction: column;
             height: 100vh;
         }
+
         /* ===================== DESKTOP ===================== */
         @media screen and (min-width: 769px) {
             body {
@@ -291,7 +292,6 @@
                 overflow: hidden;
             }
 
-            /* ── Desktop Route Info Stack ── */
             #desktopRouteInfoStack {
                 display: block;
                 width: 100%;
@@ -405,17 +405,16 @@
                 background: rgba(255, 255, 255, 0.22);
             }
 
-            /* ── Desktop Arrived Box ── */
             #desktopArrivedBox {
                 display: none;
                 width: 100%;
                 margin-top: 12px;
-                background: linear-gradient(135deg, rgba(16,185,129,0.25), rgba(5,150,105,0.15));
-                border: 1.5px solid rgba(16,185,129,0.55);
+                background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.15));
+                border: 1.5px solid rgba(16, 185, 129, 0.55);
                 border-radius: 14px;
                 padding: 16px 14px;
                 text-align: center;
-                animation: arrivedPulseDesktop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+                animation: arrivedPulseDesktop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
             }
 
             #desktopArrivedBox.show {
@@ -423,20 +422,34 @@
             }
 
             @keyframes arrivedPulseDesktop {
-                from { transform: scale(0.88); opacity: 0; }
-                to   { transform: scale(1);    opacity: 1; }
+                from {
+                    transform: scale(0.88);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: scale(1);
+                    opacity: 1;
+                }
             }
 
             .arrived-checkmark-desktop {
                 font-size: 2rem;
                 margin-bottom: 6px;
                 display: block;
-                animation: checkBounce 0.6s 0.15s cubic-bezier(0.34,1.56,0.64,1) both;
+                animation: checkBounce 0.6s 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) both;
             }
 
             @keyframes checkBounce {
-                from { transform: scale(0); opacity: 0; }
-                to   { transform: scale(1); opacity: 1; }
+                from {
+                    transform: scale(0);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: scale(1);
+                    opacity: 1;
+                }
             }
 
             .arrived-title-desktop {
@@ -449,15 +462,13 @@
 
             .arrived-sub-desktop {
                 font-size: 0.72rem;
-                color: rgba(255,255,255,0.6);
+                color: rgba(255, 255, 255, 0.6);
             }
 
-            /* Hide mobile box on desktop */
             #mobileRouteInfo {
                 display: none !important;
             }
 
-            /* Hide mobile arrived toast on desktop */
             #arrivedToast {
                 display: none !important;
             }
@@ -493,13 +504,21 @@
             .title-container {
                 text-align: center;
                 margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .title-text-group {
+                flex: 1;
+                text-align: center;
             }
 
             .head1 {
                 font-size: 1.8rem;
                 font-family: Georgia, 'Times New Roman', Times, serif;
                 color: white;
-                margin-bottom: 15px;
+                margin-bottom: 5px;
             }
 
             .input-section {
@@ -542,10 +561,6 @@
                 align-items: center;
                 justify-content: center;
                 font-size: 22px;
-            }
-
-            .swapbox {
-                transition: transform 0.3s;
             }
 
             .rotate-once {
@@ -693,17 +708,14 @@
                 overflow: hidden;
             }
 
-            /* Hide desktop stack on mobile */
             #desktopRouteInfoStack {
                 display: none !important;
             }
 
-            /* Hide desktop arrived box on mobile */
             #desktopArrivedBox {
                 display: none !important;
             }
 
-            /* ── Mobile Route Info Box (bottom-left of map) ── */
             #mobileRouteInfo {
                 position: absolute;
                 bottom: 50px;
@@ -768,7 +780,6 @@
                 display: block;
             }
 
-            /* ── Mobile Arrived Toast ── */
             #arrivedToast {
                 position: absolute;
                 bottom: 50px;
@@ -783,7 +794,7 @@
                 max-width: 85vw;
                 display: none;
                 text-align: center;
-                box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 3px rgba(16,185,129,0.15);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(16, 185, 129, 0.15);
                 opacity: 0;
                 transition: none;
             }
@@ -794,8 +805,40 @@
             }
 
             @keyframes toastSlideUp {
-                from { transform: translateX(-50%) scale(0.75) translateY(20px); opacity: 0; }
-                to   { transform: translateX(-50%) scale(1) translateY(0);       opacity: 1; }
+                from {
+                    transform: translateX(-50%) scale(0.75) translateY(20px);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: translateX(-50%) scale(1) translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                right: -100% !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 100vh !important;
+                background: var(--sidebar-bg) !important;
+                box-shadow: -4px 0 20px var(--shadow-dark) !important;
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                z-index: 9999 !important;
+                overflow-y: auto !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            .sidebar.open {
+                right: 0 !important;
+                animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            }
+
+            .overlay.active {
+                z-index: 9998 !important;
             }
         }
 
@@ -858,7 +901,6 @@
             background-color: #c82333;
         }
 
-        /* Old nav-info-panel hidden entirely */
         .nav-info-panel {
             display: none !important;
         }
@@ -884,17 +926,23 @@
             pointer-events: none;
         }
 
-        /* ── Shared Arrived Toast inner elements ── */
         .arrived-icon {
             font-size: 2rem;
             display: block;
             margin-bottom: 4px;
-            animation: iconBounce 0.6s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+            animation: iconBounce 0.6s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
         }
 
         @keyframes iconBounce {
-            from { transform: scale(0) rotate(-20deg); opacity: 0; }
-            to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+            from {
+                transform: scale(0) rotate(-20deg);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
         }
 
         .arrived-heading {
@@ -908,7 +956,7 @@
 
         .arrived-subtext {
             font-size: 0.78rem;
-            color: rgba(255,255,255,0.75);
+            color: rgba(255, 255, 255, 0.75);
             display: block;
         }
 
@@ -1107,14 +1155,14 @@
             background: white;
         }
 
-        .room-range {
-            font-size: 1.1rem;
+        .depat-name {
+            font-size: 1rem;
             font-weight: 600;
             color: var(--accent-color);
             margin-bottom: 8px;
         }
 
-        .floor-desc {
+        .room-range {
             color: #7f8c8d;
             font-size: 0.9rem;
         }
@@ -1173,26 +1221,6 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .sidebar {
-                max-width: 100%;
-            }
-
-            .sidebar-header h1 {
-                font-size: 1.5rem;
-            }
-
-            .accordion-item summary {
-                padding: 14px 16px;
-                font-size: 1rem;
-            }
-
-            .department-list li {
-                padding: 10px 14px;
-                font-size: 0.9rem;
-            }
-        }
-
         @media (max-width: 480px) {
             .sidebar-header {
                 padding: 20px;
@@ -1219,6 +1247,331 @@
             outline: 3px solid var(--accent-color);
             outline-offset: 2px;
         }
+
+        /* ===================== IMAGE CAROUSEL IN SIDEBAR ===================== */
+        .sidebar-image-carousel {
+            position: relative;
+            width: 100%;
+            background: #1a1a2e;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .carousel-images-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+        }
+
+        .carousel-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            cursor: pointer;
+        }
+
+        .carousel-img.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .carousel-img:hover {
+            filter: brightness(1.08);
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.55);
+            border: none;
+            color: white;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.2s;
+            padding: 0;
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(0, 0, 0, 0.82);
+            transform: translateY(-50%) scale(1.12);
+        }
+
+        .carousel-arrow.left {
+            left: 8px;
+        }
+
+        .carousel-arrow.right {
+            right: 8px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 0 10px;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            border: none;
+        }
+
+        .carousel-dot.active {
+            background: #FFE000;
+            transform: scale(1.3);
+        }
+
+        .carousel-counter {
+            position: absolute;
+            bottom: 8px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.55);
+            color: white;
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            z-index: 10;
+            font-weight: 600;
+        }
+
+        /* ===================== LIGHTBOX ===================== */
+        #lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            animation: lightboxFadeIn 0.25s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        @keyframes lightboxFadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .lightbox-inner {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 0 70px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .lightbox-inner {
+                padding: 0 48px;
+            }
+        }
+
+        .lightbox-img-wrap {
+            position: relative;
+            max-width: 90vw;
+            max-height: 88vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #lightboxImg {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 10px;
+            box-shadow: 0 8px 60px rgba(0, 0, 0, 0.7);
+            object-fit: contain;
+            animation: lightboxImgIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @media screen and (max-width: 768px) {
+            #lightboxImg {
+                max-width: 100vw;
+                max-height: 100vh;
+                border-radius: 0;
+                width: 100vw;
+                height: 100vh;
+                object-fit: contain;
+                background: #000;
+            }
+
+            .lightbox-inner {
+                padding: 0;
+            }
+
+            #lightbox {
+                background: #000;
+            }
+        }
+
+        @keyframes lightboxImgIn {
+            from {
+                transform: scale(0.88);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 18px;
+            right: 22px;
+            z-index: 100001;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .lightbox-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100001;
+            background: rgba(255, 255, 255, 0.13);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.2s, border-color 0.2s;
+        }
+
+        .lightbox-arrow:hover {
+            background: rgba(255, 255, 255, 0.28);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-arrow.left {
+            left: 14px;
+        }
+
+        .lightbox-arrow.right {
+            right: 14px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .lightbox-arrow {
+                width: 42px;
+                height: 42px;
+                font-size: 18px;
+            }
+
+            .lightbox-arrow.left {
+                left: 6px;
+            }
+
+            .lightbox-arrow.right {
+                right: 6px;
+            }
+        }
+
+        .lightbox-counter {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.55);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.85rem;
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .lightbox-dots {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 100001;
+        }
+
+        .lightbox-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .lightbox-dot.active {
+            background: #FFE000;
+            transform: scale(1.3);
+        }
+
+        /* Images accordion - no padding on list item with carousel */
+        .department-list li.carousel-list-item {
+            padding: 0;
+            background: transparent;
+            border-left: none;
+        }
+
+        .department-list li.carousel-list-item:hover {
+            background: transparent;
+            transform: none;
+        }
     </style>
 </head>
 
@@ -1226,8 +1579,10 @@
     <nav>
         <div class="nav-container">
             <div class="title-container">
-                <h1 class="head1">FIND YOUR WAY</h1>
-                <p>Campus Navigation Assistant</p>
+                <div class="title-text-group">
+                    <h1 class="head1">FIND YOUR WAY</h1>
+                    <p>Campus Navigation Assistant</p>
+                </div>
             </div>
             <div class="input-section">
                 <div class="input-row">
@@ -1257,9 +1612,7 @@
                     <button id="but2" onclick="clearRoute()"><span class="search-text">Clear &#10060;</span></button>
                 </div>
             </div>
-            <!-- Desktop route info stack lives here, below buttons -->
             <div id="desktopRouteInfoStack"></div>
-            <!-- Desktop arrived message -->
             <div id="desktopArrivedBox">
                 <span class="arrived-checkmark-desktop">🎉</span>
                 <div class="arrived-title-desktop">You reached the destination!</div>
@@ -1271,12 +1624,10 @@
     <div id="mapSection" class="map-section">
         <button id="currentLocationBtn" class="current-location-btn"><i class="fas fa-location-crosshairs"></i></button>
         <button id="landmarkToggleBtn" class="landmark-toggle-btn"><i class="fas fa-map-pin"></i></button>
-        <!-- Hidden legacy panel -->
         <div id="navInfoPanel" class="nav-info-panel">
             <div id="navDistance" class="nav-info-distance">0 meters</div>
             <div id="navTime" class="nav-info-time">0 minutes</div>
         </div>
-        <!-- Mobile bottom-left route info -->
         <div id="mobileRouteInfo">
             <span class="mobile-stat-label">Distance</span>
             <span class="mobile-stat-value" id="mobileDistVal">&#8212;</span>
@@ -1284,7 +1635,6 @@
             <span class="mobile-stat-label">Est. Walk</span>
             <span class="mobile-time-value" id="mobileTimeVal">&#8212;</span>
         </div>
-        <!-- Mobile arrived toast -->
         <div id="arrivedToast">
             <span class="arrived-icon">🎉</span>
             <span class="arrived-heading">You reached the destination!</span>
@@ -1311,29 +1661,6 @@
                     <svg class="summary-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                    </svg>
-                    Departments
-                </summary>
-                <ul class="department-list">
-                    <li>B.Sc Computer Science</li>
-                    <li>B.Sc Computer Application</li>
-                    <li>B.Sc Computer Technology</li>
-                    <li>B.Sc Data Analytics</li>
-                    <li>B.Sc Computer Networks</li>
-                    <li>B.Sc Information Technology</li>
-                    <li>M.Sc Software Systems</li>
-                    <li></li>
-                </ul>
-            </details>
-            <details class="accordion-item">
-                <summary>
-                    <svg class="summary-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
                         <rect x="3" y="3" width="7" height="7"></rect>
                         <rect x="14" y="3" width="7" height="7"></rect>
                         <rect x="14" y="14" width="7" height="7"></rect>
@@ -1341,10 +1668,24 @@
                     </svg>
                     Ground Floor
                 </summary>
-                <div class="floor-info">
-                    <p class="room-range">Rooms: E101 - E120</p>
-                    <p class="floor-desc">20 rooms available</p>
-                </div>
+                <ul class="department-list">
+                    <li>
+                        <p class="depat-name">B.Sc Computer Technology(SF)</p>
+                        <p class="room-range">Rooms: E101 - E120</p>
+                    </li>
+                    <li>
+                        <p class="depat-name">B.Sc Information Technology(SF)</p>
+                        <p class="room-range">Rooms: E101 - E120</p>
+                    </li>
+                    <li>
+                        <p class="depat-name">B.A English(Aided)</p>
+                        <p class="room-range">Rooms: E101 - E120</p>
+                    </li>
+                    <li>
+                        <p class="depat-name">Laboratory</p>
+                        <p class="room-range">Room: E109</p>
+                    </li>
+                </ul>
             </details>
             <details class="accordion-item">
                 <summary>
@@ -1358,10 +1699,24 @@
                     </svg>
                     First Floor
                 </summary>
-                <div class="floor-info">
-                    <p class="room-range">Rooms: E201 - E220</p>
-                    <p class="floor-desc">20 rooms available</p>
-                </div>
+                <ul class="department-list">
+                    <li>
+                        <p class="depat-name">B.Sc Computer Science(SF)</p>
+                        <p class="room-range">Rooms: E201 - E220</p>
+                    </li>
+                    <li>
+                        <p class="depat-name">M.Sc Software Systems(SF)</p>
+                        <p class="room-range">Rooms: E201 - E202</p>
+                    </li>
+                    <li>
+                        <p class="depat-name">B.A Tamil(Aided)</p>
+                        <p class="room-range">Rooms: E201 - E202</p>
+                    </li>
+                    <li>
+                        <p class="depat-name">Laboratory</p>
+                        <p class="room-range">Room: E209, E210</p>
+                    </li>
+                </ul>
             </details>
             <details class="accordion-item">
                 <summary>
@@ -1375,18 +1730,226 @@
                     </svg>
                     Second Floor
                 </summary>
-                <div class="floor-info">
-                    <p class="room-range">Rooms: E301 - E320</p>
-                    <p class="floor-desc">20 rooms available</p>
-                </div>
+                <ul class="department-list">
+                    <li>
+                        <p class="depat-name">B.Sc Computer Application(SF)</p>
+                        <p class="room-range">Rooms: E301 - E320</p>
+                    </li>
+                    <li>
+                        <p class="depat-name">B.Voc Networking & Mobile Application(SF)</p>
+                        <p class="room-range">Rooms: E301 - E320</p>
+                    </li>
+                    <li>
+                        <p class="depat-name">B.Sc Computer Science with Data Analytics(SF)</p>
+                        <p class="room-range">Rooms: E301 - E320</p>
+                    </li>
+                    <li>
+                        <p class="depat-name">Laboratory</p>
+                        <p class="room-range">Room: E309</p>
+                    </li>
+                </ul>
+            </details>
+            <details class="accordion-item" id="imagesAccordion">
+                <summary>
+                    <svg class="summary-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                    Images
+                </summary>
+                <ul class="department-list">
+                    <li class="carousel-list-item">
+                        <!-- Sidebar Image Carousel -->
+                        <div class="sidebar-image-carousel" id="sidebarCarousel">
+                            <div class="carousel-images-wrapper">
+                                <img class="carousel-img active" src="E Block.jpg" alt="E Block Image 1"
+                                    onerror="this.src='https://placehold.co/400x250/1a1a2e/ffffff?text=E+Block'" />
+                                <img class="carousel-img" src="E Block2.webp" alt="E Block Image 2"
+                                    onerror="this.src='https://placehold.co/400x250/2d1b69/ffffff?text=E+Block+2'" />
+                                <span class="carousel-counter" id="carouselCounter">1 / 2</span>
+                            </div>
+                            <button class="carousel-arrow left" id="carouselPrev"
+                                aria-label="Previous image">&#8249;</button>
+                            <button class="carousel-arrow right" id="carouselNext"
+                                aria-label="Next image">&#8250;</button>
+                            <div class="carousel-dots" id="carouselDots"></div>
+                        </div>
+                    </li>
+                </ul>
             </details>
         </div>
     </aside>
 
+    <!-- Lightbox -->
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">&#10005;</button>
+        <button class="lightbox-arrow left" id="lightboxPrev" aria-label="Previous image">&#8249;</button>
+        <div class="lightbox-inner">
+            <div class="lightbox-img-wrap">
+                <img id="lightboxImg" src="" alt="E Block" />
+            </div>
+        </div>
+        <button class="lightbox-arrow right" id="lightboxNext" aria-label="Next image">&#8250;</button>
+        <div class="lightbox-dots" id="lightboxDots"></div>
+        <div class="lightbox-counter" id="lightboxCounter">1 / 2</div>
+    </div>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
-        // ---------- GLOBALS ----------
+        /* ============================================================
+           IMAGE GALLERY: Sidebar Carousel + Lightbox
+        ============================================================ */
+        const galleryImages = [
+            { src: 'E Block.jpg', fallback: 'https://placehold.co/900x600/1a1a2e/ffffff?text=E+Block+Front', alt: 'E Block' },
+            { src: 'E Block2.webp', fallback: 'https://placehold.co/900x600/2d1b69/ffffff?text=E+Block+Side', alt: 'E Block' }
+        ];
+
+        let carouselIndex = 0;
+        let lightboxIndex = 0;
+
+        function initCarousel() {
+            const imgs = document.querySelectorAll('#sidebarCarousel .carousel-img');
+            const dotsContainer = document.getElementById('carouselDots');
+            const counter = document.getElementById('carouselCounter');
+
+            // Build dots
+            dotsContainer.innerHTML = '';
+            galleryImages.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', `Go to image ${i + 1}`);
+                dot.addEventListener('click', () => goToCarousel(i));
+                dotsContainer.appendChild(dot);
+            });
+
+            // Click image to open lightbox
+            imgs.forEach((img, i) => {
+                img.addEventListener('click', () => openLightbox(i));
+            });
+
+            document.getElementById('carouselPrev').addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToCarousel((carouselIndex - 1 + galleryImages.length) % galleryImages.length);
+            });
+
+            document.getElementById('carouselNext').addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToCarousel((carouselIndex + 1) % galleryImages.length);
+            });
+        }
+
+        function goToCarousel(idx) {
+            const imgs = document.querySelectorAll('#sidebarCarousel .carousel-img');
+            const dots = document.querySelectorAll('#carouselDots .carousel-dot');
+            const counter = document.getElementById('carouselCounter');
+
+            imgs[carouselIndex].classList.remove('active');
+            dots[carouselIndex].classList.remove('active');
+
+            carouselIndex = idx;
+
+            imgs[carouselIndex].classList.add('active');
+            dots[carouselIndex].classList.add('active');
+            counter.textContent = `${carouselIndex + 1} / ${galleryImages.length}`;
+        }
+
+        function initLightbox() {
+            const dotsContainer = document.getElementById('lightboxDots');
+            dotsContainer.innerHTML = '';
+            galleryImages.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.className = 'lightbox-dot';
+                dot.setAttribute('aria-label', `Go to image ${i + 1}`);
+                dot.addEventListener('click', () => goToLightbox(i));
+                dotsContainer.appendChild(dot);
+            });
+
+            document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+            document.getElementById('lightboxPrev').addEventListener('click', () => {
+                goToLightbox((lightboxIndex - 1 + galleryImages.length) % galleryImages.length);
+            });
+            document.getElementById('lightboxNext').addEventListener('click', () => {
+                goToLightbox((lightboxIndex + 1) % galleryImages.length);
+            });
+
+            document.getElementById('lightbox').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('lightbox')) closeLightbox();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                const lb = document.getElementById('lightbox');
+                if (!lb.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') goToLightbox((lightboxIndex - 1 + galleryImages.length) % galleryImages.length);
+                if (e.key === 'ArrowRight') goToLightbox((lightboxIndex + 1) % galleryImages.length);
+            });
+        }
+
+        function openLightbox(idx) {
+            lightboxIndex = idx;
+            const lb = document.getElementById('lightbox');
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateLightboxImage();
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function goToLightbox(idx) {
+            lightboxIndex = idx;
+            updateLightboxImage();
+        }
+
+        function updateLightboxImage() {
+            const img = document.getElementById('lightboxImg');
+            const counter = document.getElementById('lightboxCounter');
+            const dots = document.querySelectorAll('#lightboxDots .lightbox-dot');
+
+            // Animate out/in
+            img.style.animation = 'none';
+            img.offsetHeight; // reflow
+            img.style.animation = 'lightboxImgIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+
+            const g = galleryImages[lightboxIndex];
+            img.src = g.src;
+            img.alt = g.alt;
+            img.onerror = () => { img.src = g.fallback; };
+
+            counter.textContent = `${lightboxIndex + 1} / ${galleryImages.length}`;
+
+            dots.forEach((d, i) => {
+                d.classList.toggle('active', i === lightboxIndex);
+            });
+        }
+
+        // Touch/swipe support for lightbox
+        let lbTouchStartX = 0;
+        document.getElementById ? (() => {
+            document.addEventListener('touchstart', (e) => {
+                if (!document.getElementById('lightbox').classList.contains('active')) return;
+                lbTouchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            document.addEventListener('touchend', (e) => {
+                if (!document.getElementById('lightbox').classList.contains('active')) return;
+                const dx = e.changedTouches[0].screenX - lbTouchStartX;
+                if (Math.abs(dx) > 40) {
+                    if (dx < 0) goToLightbox((lightboxIndex + 1) % galleryImages.length);
+                    else goToLightbox((lightboxIndex - 1 + galleryImages.length) % galleryImages.length);
+                }
+            }, { passive: true });
+        })() : null;
+
+        /* ============================================================
+           ORIGINAL MAP & NAVIGATION CODE (unchanged)
+        ============================================================ */
         let campusMap, userLocationMarker, accuracyCircle;
         let userWatchId = null, userLatLng = null;
         let startMarker = null, endMarker = null;
@@ -1397,9 +1960,8 @@
         let isNavigating = false, currentDestination = null, fullRoutePath = [], currentPathIndices = [];
         let lastUpdateTime = 0;
         const UPDATE_THRESHOLD = 2000, PROXIMITY_THRESHOLD = 15, DEVIATION_THRESHOLD = 25;
-        // Destination reached threshold in metres — tune as needed
         const ARRIVED_THRESHOLD = 20;
-        let hasArrived = false; // prevent repeated triggers
+        let hasArrived = false;
         let graph = { nodes: [], edges: [] }, nodeIndex = new Map(), places = [];
         let lastResults, activeRouteIndex = 0;
         const KROUTES = 5;
@@ -1411,7 +1973,7 @@
             { "id": "prin", "name": "Principal Office", "lat": 11.033269, "lng": 77.033861 },
             { "id": "sf", "name": "S F Office", "lat": 11.033111, "lng": 77.033410 },
             { "id": "aided", "name": "Aided Office", "lat": 11.033277, "lng": 77.034183 },
-            { "id": "hostel", "name": "Hostel Office", "lat": 11.032646, "lng": 77.035449 },
+            { "id": "hostel", "name": "Hostel Office", "lat": 11.032646, "lng": 77.035309 },
             { "id": "can1", "name": "Food Court 1", "lat": 11.033695, "lng": 77.034336 },
             { "id": "can2", "name": "Food Court 2", "lat": 11.032013, "lng": 77.032709 },
             { "id": "grd", "name": "GRD Auditorium", "lat": 11.032415, "lng": 77.033340 },
@@ -1424,14 +1986,14 @@
             { "id": "fb", "name": "F Block", "lat": 11.032585, "lng": 77.033888 },
             { "id": "gb", "name": "G Block", "lat": 11.032609, "lng": 77.034594 },
             { "id": "qb", "name": "Q Block", "lat": 11.034020, "lng": 77.034499 },
-            { "id": "book", "name": "Book Depot", "lat": 11.033405, "lng": 77.033032 }, 
+            { "id": "book", "name": "Book Depot", "lat": 11.033405, "lng": 77.033032 },
             { "id": "pothigai", "name": "Pothigai Hall", "lat": 11.033372, "lng": 77.033410 },
-            { "id": "Brahmam", "name": "Brahmam Hall", "lat": 11.034183,  "lng": 77.033856 },
-            { "id": "Sangamam", "name": "Sangamam Hall", "lat": 11.032886,  "lng": 77.034344 },
-            { "id": "bharathi", "name": "Bharathi Hostel", "lat": 11.032652, "lng": 77.035604 }, 
+            { "id": "Brahmam", "name": "Brahmam Hall", "lat": 11.034183, "lng": 77.033856 },
+            { "id": "Sangamam", "name": "Sangamam Hall", "lat": 11.032886, "lng": 77.034344 },
+            { "id": "bharathi", "name": "Bharathi Hostel", "lat": 11.032652, "lng": 77.035604 },
             { "id": "voc", "name": "VOC Hostel", "lat": 11.033490, "lng": 77.035535 },
             { "id": "nri", "name": "NRI Hostel", "lat": 11.032658, "lng": 77.035785 },
-            { "id": "main", "name": "Maintainance Block", "lat": 11.033711, "lng": 77.035527 }, 
+            { "id": "main", "name": "Maintainance Block", "lat": 11.033711, "lng": 77.035527 },
             { "id": "alu", "name": "Alumni Block", "lat": 11.032002, "lng": 77.033445 },
             { "id": "kaveri", "name": "Kaveri Hall", "lat": 11.034020, "lng": 77.034499 },
             { "id": "vaigai", "name": "Vaigai Hall", "lat": 11.034020, "lng": 77.034499 },
@@ -1445,7 +2007,7 @@
             { "id": "prin", "name": "Principal Office", "lat": 11.033200, "lng": 77.033947, "icon": "💼" },
             { "id": "sf", "name": "S F Office", "lat": 11.033105, "lng": 77.033502, "icon": "💼" },
             { "id": "aided", "name": "Aided Office", "lat": 11.033190, "lng": 77.034094, "icon": "💼" },
-            { "id": "hostel", "name": "Hostel Office", "lat": 11.032776, "lng": 77.035441, "icon": "💼" },
+            { "id": "hostel", "name": "Hostel Office", "lat": 11.032776, "lng": 77.035321, "icon": "💼" },
             { "id": "can1", "name": "Food Court 1", "lat": 11.033762, "lng": 77.034287, "icon": "🍽️" },
             { "id": "can2", "name": "Food Court 2", "lat": 11.031994, "lng": 77.032606, "icon": "🍽️" },
             { "id": "grd", "name": "GRD Auditorium", "lat": 11.032361, "lng": 77.033290, "icon": "🎭" },
@@ -1539,7 +2101,7 @@
                 ["G79", "G78"], ["G78", "G77"], ["G77", "G76"], ["G76", "G37"], ["G31", "G75"],
                 ["G54", "G73"], ["G73", "G74"], ["G74", "G75"], ["G55", "G74"], ["G65", "G69"],
                 ["G69", "G70"], ["G70", "G71"], ["G71", "G72"], ["G26", "G83"], ["G84", "G83"],
-                ["G60", "G85"], ["G61", "G85"],["G53", "G86"],["G86", "G52"],["G19", "G87"],["G87", "G3"],["G88", "G61"],["G88", "G63"],
+                ["G60", "G85"], ["G61", "G85"], ["G53", "G86"], ["G86", "G52"], ["G19", "G87"], ["G87", "G3"], ["G88", "G61"], ["G88", "G63"],
                 ["G89", "G75"],
             ]
         };
@@ -1548,8 +2110,8 @@
             'Current Location', 'Front Gate', 'Admission Office', 'Library', 'Principal Office',
             'S F Office', 'Aided Office', 'Hostel Office', 'Food Court 1', 'Food Court 2',
             'GRD Auditorium', 'Indoor Auditorium', 'A Block', 'B Block', 'C Block', 'D Block',
-            'E Block', 'F Block', 'G Block', 'Q Block','Maintainance Block','Alumni Block', 'Book Depot', 'Pothigai Hall','Sangamam Hall','Brahmam Hall','Kaveri Hall',
-            'Vaigai Hall','Bharathi Hostel', 'NRI Hostel','VOC Hostel','Back Gate',
+            'E Block', 'F Block', 'G Block', 'Q Block', 'Maintainance Block', 'Alumni Block', 'Book Depot', 'Pothigai Hall', 'Sangamam Hall', 'Brahmam Hall', 'Kaveri Hall',
+            'Vaigai Hall', 'Bharathi Hostel', 'NRI Hostel', 'VOC Hostel', 'Back Gate',
         ];
 
         const landmarkMapping = {
@@ -1560,114 +2122,54 @@
             'B Block': 'bb', 'C Block': 'cb', 'D Block': 'db', 'E Block': 'eb',
             'F Block': 'fb', 'G Block': 'gb', 'Q Block': 'qb', 'Book Depot': 'book',
             'Pothigai Hall': 'pothigai', 'Bharathi Hostel': 'bharathi', 'NRI Hostel': 'nri',
-            'Back Gate': 'back','Sangamam Hall':'Sangamam','Brahmam Hall':'Brahmam','VOC Hostel':'voc','Maintainance Block':'main','Alumni Block':'alu',
-            'Kaveri Hall':'kaveri','Vaigai Hall':'vaigai'
+            'Back Gate': 'back', 'Sangamam Hall': 'Sangamam', 'Brahmam Hall': 'Brahmam', 'VOC Hostel': 'voc', 'Maintainance Block': 'main', 'Alumni Block': 'alu',
+            'Kaveri Hall': 'kaveri', 'Vaigai Hall': 'vaigai'
         };
 
-        // ══ ARRIVED NOTIFICATION ══
-        /**
-         * Show the "You reached the destination" UI.
-         * - Hides the distance/time info bar
-         * - Shows a styled arrived message
-         * - Stops arrow animation & navigation
-         */
         function showArrivedNotification(destName) {
             if (hasArrived) return;
-            hasArrived = true;
-            isNavigating = false;
-
-            // Stop arrow + clear route visuals
-            stopArrowAnimation();
-
+            hasArrived = true; isNavigating = false; stopArrowAnimation();
             const subtext = destName ? `You have arrived at ${destName}.` : 'You have arrived.';
-
             if (isMobile()) {
-                // Hide distance/time info
                 const info = document.getElementById('mobileRouteInfo');
                 if (info) info.classList.remove('active');
-
-                // Show toast
                 const toast = document.getElementById('arrivedToast');
                 const sub = document.getElementById('mobileArrivedSubtext');
                 if (sub) sub.textContent = subtext;
-                if (toast) {
-                    toast.classList.remove('show');
-                    // Force reflow so animation replays if needed
-                    void toast.offsetWidth;
-                    toast.classList.add('show');
-                }
+                if (toast) { toast.classList.remove('show'); void toast.offsetWidth; toast.classList.add('show'); }
             } else {
-                // Hide desktop route stack
                 const stack = document.getElementById('desktopRouteInfoStack');
                 if (stack) stack.innerHTML = '';
-
-                // Show desktop arrived box
                 const box = document.getElementById('desktopArrivedBox');
                 const sub = document.getElementById('desktopArrivedSubtext');
                 if (sub) sub.textContent = subtext;
-                if (box) {
-                    box.classList.remove('show');
-                    void box.offsetWidth;
-                    box.classList.add('show');
-                }
+                if (box) { box.classList.remove('show'); void box.offsetWidth; box.classList.add('show'); }
             }
         }
 
-        /**
-         * Check if user has reached destination and trigger notification.
-         * Called every time a new GPS position arrives during navigation.
-         */
         function checkIfArrived(userPos) {
             if (!isNavigating || !currentDestination || hasArrived) return;
             const dist = hav(userPos, currentDestination);
-            if (dist <= ARRIVED_THRESHOLD) {
-                showArrivedNotification(currentDestination.name);
-            }
+            if (dist <= ARRIVED_THRESHOLD) showArrivedNotification(currentDestination.name);
         }
 
-        // ══ ROUTE INFO PANEL UTILITIES ══
         function isMobile() { return window.innerWidth <= 768; }
-
-        function fmtDist(m) {
-            if (m >= 1000) return (m / 1000).toFixed(2) + ' km';
-            return Math.round(m) + ' m';
-        }
-        function fmtTime(m) {
-            const mins = Math.ceil(m / 1.4 / 60);
-            return mins < 1 ? '< 1 min' : mins + ' min';
-        }
+        function fmtDist(m) { if (m >= 1000) return (m / 1000).toFixed(2) + ' km'; return Math.round(m) + ' m'; }
+        function fmtTime(m) { const mins = Math.ceil(m / 1.4 / 60); return mins < 1 ? '< 1 min' : mins + ' min'; }
 
         function renderDesktopRouteStack(results, activeIdx) {
             const stack = document.getElementById('desktopRouteInfoStack');
             if (!stack) return;
             stack.innerHTML = '';
             if (!results || !results.length) return;
-            const sorted = results
-                .map((r, i) => ({ ...r, origIdx: i }))
-                .sort((a, b) => a.distance - b.distance);
-
+            const sorted = results.map((r, i) => ({ ...r, origIdx: i })).sort((a, b) => a.distance - b.distance);
             sorted.forEach((res, si) => {
                 const isActive = res.origIdx === activeIdx;
                 const box = document.createElement('div');
                 box.className = 'route-info-box' + (isActive ? ' active-route' : '');
                 const label = si === 0 ? 'Shortest Route' : 'Route ' + (si + 1);
                 const badgeText = isActive ? '&#9679; Active' : 'View';
-                box.innerHTML = `
-                    <div class="route-box-header">
-                        <span class="route-box-label${si === 0 ? ' shortest' : ''}">${label}</span>
-                        <span class="route-box-badge${isActive ? ' active-badge' : ''}">${badgeText}</span>
-                    </div>
-                    <div class="route-box-stats">
-                        <div class="route-stat">
-                            <span class="route-stat-value">${fmtDist(res.distance)}</span>
-                            <span class="route-stat-unit">Distance</span>
-                        </div>
-                        <div class="route-stat-divider"></div>
-                        <div class="route-stat">
-                            <span class="route-stat-value">${fmtTime(res.distance)}</span>
-                            <span class="route-stat-unit">Est. Walk</span>
-                        </div>
-                    </div>`;
+                box.innerHTML = `<div class="route-box-header"><span class="route-box-label${si === 0 ? ' shortest' : ''}">${label}</span><span class="route-box-badge${isActive ? ' active-badge' : ''}">${badgeText}</span></div><div class="route-box-stats"><div class="route-stat"><span class="route-stat-value">${fmtDist(res.distance)}</span><span class="route-stat-unit">Distance</span></div><div class="route-stat-divider"></div><div class="route-stat"><span class="route-stat-value">${fmtTime(res.distance)}</span><span class="route-stat-unit">Est. Walk</span></div></div>`;
                 box.addEventListener('click', () => renderSelectedRoute(res.origIdx));
                 stack.appendChild(box);
             });
@@ -1687,7 +2189,6 @@
             if (stack) stack.innerHTML = '';
             const mob = document.getElementById('mobileRouteInfo');
             if (mob) mob.classList.remove('active');
-            // Also hide arrived notifications on clear
             const toast = document.getElementById('arrivedToast');
             if (toast) toast.classList.remove('show');
             const dbox = document.getElementById('desktopArrivedBox');
@@ -1695,7 +2196,6 @@
             hasArrived = false;
         }
 
-        // ══ ARROW ANIMATION ══
         function buildCumDist(ll) {
             const c = [0];
             for (let i = 1; i < ll.length; i++) c.push(c[i - 1] + hav({ lat: ll[i - 1][0], lng: ll[i - 1][1] }, { lat: ll[i][0], lng: ll[i][1] }));
@@ -1737,7 +2237,6 @@
             arrowRouteLatlngs = []; arrowProgress = 0;
         }
 
-        // ══ SIDEBAR ══
         function openSidebar() { document.getElementById('sideMenu').classList.add('open'); document.getElementById('overlay').classList.add('active'); document.body.style.overflow = 'hidden'; setTimeout(() => document.getElementById('closeBtn').focus(), 100); }
         function closeSidebar() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.style.overflow = ''; }
 
@@ -1766,8 +2265,7 @@
             const sw = document.querySelector('.swapbox');
             if (sw) {
                 sw.addEventListener('click', () => {
-                    const fb = document.getElementById('fromBox');
-                    const tb = document.getElementById('toBox');
+                    const fb = document.getElementById('fromBox'), tb = document.getElementById('toBox');
                     [fb.value, tb.value] = [tb.value, fb.value];
                     sw.classList.toggle('flipped');
                 });
@@ -1792,7 +2290,6 @@
             });
         }
 
-        // ══ MAP SETUP ══
         function initializeMap() {
             if (campusMap) { campusMap.invalidateSize(); return; }
             const cb = L.latLngBounds(L.latLng(11.029847, 77.032077), L.latLng(11.035600, 77.036616));
@@ -1822,12 +2319,12 @@
         function dijkstra(adj, src, dst) {
             const n = adj.length, dist = Array(n).fill(Infinity), prev = Array(n).fill(-1), used = Array(n).fill(false);
             dist[src] = 0; const pq = [{ d: 0, i: src }];
-            const pop = () => { if (!pq.length) return null; let bi = -1, bd = Infinity; for (let i = 0; i < pq.length; i++)if (pq[i].d < bd) { bd = pq[i].d; bi = i; } return bi < 0 ? null : pq.splice(bi, 1)[0]; };
+            const pop = () => { if (!pq.length) return null; let bi = -1, bd = Infinity; for (let i = 0; i < pq.length; i++) if (pq[i].d < bd) { bd = pq[i].d; bi = i; } return bi < 0 ? null : pq.splice(bi, 1)[0]; };
             while (pq.length) { const cur = pop(); if (!cur) break; const u = cur.i; if (used[u]) continue; used[u] = true; if (u === dst) break; for (const [v, w] of adj[u]) if (!used[v] && dist[u] + w < dist[v]) { dist[v] = dist[u] + w; prev[v] = u; pq.push({ d: dist[v], i: v }); } }
             const path = []; let u = dst; if (prev[u] === -1 && u !== src) return { path: [], distance: Infinity }; while (u !== -1) { path.push(u); if (u === src) break; u = prev[u]; } path.reverse(); return { path, distance: dist[dst] };
         }
-        function pathDistance(idx) { let d = 0; for (let i = 0; i + 1 < idx.length; i++)d += hav(graph.nodes[idx[i]], graph.nodes[idx[i + 1]]); return d; }
-        function arraysEqual(a, b) { if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++)if (a[i] !== b[i]) return false; return true; }
+        function pathDistance(idx) { let d = 0; for (let i = 0; i + 1 < idx.length; i++) d += hav(graph.nodes[idx[i]], graph.nodes[idx[i + 1]]); return d; }
+        function arraysEqual(a, b) { if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false; return true; }
         function yensKShortests(i, t, K) {
             const A = [], B = [], adj0 = buildAdj(), p0 = dijkstra(adj0, i, t);
             if (!p0.path.length || !isFinite(p0.distance)) return A; A.push(p0);
@@ -1859,7 +2356,6 @@
             endMarker = L.marker([B.lat, B.lng], { icon: createEndIcon(), zIndexOffset: 1000 }).addTo(campusMap).bindPopup(`<strong>Destination:</strong><br/>${B.name}`).openPopup();
         }
 
-        // ══ NAVIGATION ══
         function checkDeviationAndRecalc(up) {
             if (!isNavigating || !currentDestination || !up || !currentPathIndices || !currentPathIndices.length) return false;
             let mn = Infinity;
@@ -1886,11 +2382,8 @@
             if (!isNavigating || !userLatLng || !currentDestination || !currentPathIndices.length) return;
             const now = Date.now(); if (now - lastUpdateTime < UPDATE_THRESHOLD) return; lastUpdateTime = now;
             const up = { lat: userLatLng[0], lng: userLatLng[1] };
-
-            // Check arrived first
             checkIfArrived(up);
             if (hasArrived) return;
-
             if (checkDeviationAndRecalc(up)) return;
             let ci = 0, md = Infinity;
             for (let i = 0; i < currentPathIndices.length; i++) { const d = hav(up, graph.nodes[currentPathIndices[i]]); if (d < md) { md = d; ci = i; } }
@@ -1946,14 +2439,11 @@
             const fl = document.getElementById('fromBox').value, tl = document.getElementById('toBox').value;
             if (!fl || !tl) { alert('Please select both From and To locations'); return; }
             if (!campusMap) { initializeMap(); return; }
-
-            // Reset arrived state whenever a new route is searched
             hasArrived = false;
             const toast = document.getElementById('arrivedToast');
             if (toast) toast.classList.remove('show');
             const dbox = document.getElementById('desktopArrivedBox');
             if (dbox) dbox.classList.remove('show');
-
             startGeolocation();
             if (fl === 'Current Location') {
                 if (!userLatLng) {
@@ -2016,7 +2506,6 @@
         function geolocationError(err) { console.error('Geolocation error:', err); }
         function centerOnUserLocation() { if (userLatLng) campusMap.setView(userLatLng, 18); else startGeolocation(); }
 
-        // ══ INIT ══
         document.addEventListener('DOMContentLoaded', function () {
             const fl = document.getElementById('fromList'), tl = document.getElementById('toList');
             locationsList.forEach(loc => {
@@ -2026,6 +2515,10 @@
             initializeMap(); setupSwapButton(); setupGlobalClickHandler(); setupSidebarHandlers();
             document.getElementById('currentLocationBtn')?.addEventListener('click', centerOnUserLocation);
             document.getElementById('landmarkToggleBtn')?.addEventListener('click', toggleLandmarks);
+
+            // Initialize gallery
+            initCarousel();
+            initLightbox();
         });
 
         function setupSidebarHandlers() {
@@ -2038,9 +2531,7 @@
             document.querySelectorAll('.accordion-item').forEach(d => { d.addEventListener('toggle', function () { if (this.open) setTimeout(() => this.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 300); }); });
             let tsx = 0, tex = 0;
             sm.addEventListener('touchstart', e => { tsx = e.changedTouches[0].screenX; }, { passive: true });
-            sm.addEventListener('touchend', e => {
-                tex = e.changedTouches[0].screenX; if (tex - tsx > 50) closeSidebar();
-            }, { passive: true });
+            sm.addEventListener('touchend', e => { tex = e.changedTouches[0].screenX; if (tex - tsx > 50) closeSidebar(); }, { passive: true });
             sm.addEventListener('transitionend', () => { if (sm.classList.contains('open')) document.querySelectorAll('.accordion-item').forEach((item, i) => setTimeout(() => { item.style.animation = 'fadeIn 0.3s ease forwards'; }, i * 50)); });
         }
         window.openSidebar = openSidebar;
