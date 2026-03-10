@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,7 +19,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Nunito', Arial, sans-serif;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
@@ -31,12 +34,12 @@
             }
 
             nav {
-                background: linear-gradient(#50036a, #a147d8, #872ddc, purple);
+                background: linear-gradient(180deg, #50036a, #a147d8, #872ddc, purple);
                 width: 22%;
                 min-width: 240px;
                 max-width: 300px;
                 height: 100vh;
-                padding: 30px 15px 0px 15px;
+                padding: 24px 15px 0px 15px;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
@@ -73,18 +76,47 @@
             }
 
             .title-container {
-                text-align: left;
-                margin-bottom: 25px;
+                text-align: center;
+                margin-bottom: 20px;
                 width: 100%;
+                padding: 0 4px;
+            }
+
+            /* College abbreviation badge */
+            .title-badge {
+                display: inline-block;
+                background: rgba(255, 255, 255, 0.15);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 6px;
+                padding: 2px 10px;
+                font-family: 'Cinzel', serif;
+                font-size: 0.72rem;
+                font-weight: 700;
+                color: #f8d56e;
+                letter-spacing: 0.12em;
+                margin-bottom: 7px;
+                text-transform: uppercase;
             }
 
             .head1 {
-                font-size: clamp(18px, 2.5vw, 30px);
-                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-family: 'Cinzel', Georgia, serif;
+                font-size: clamp(13px, 1.45vw, 18px);
+                font-weight: 700;
                 color: rgb(234, 222, 198);
-                margin-bottom: 10px;
-                margin-top: 0;
-                white-space: nowrap;
+                line-height: 1.35;
+                word-break: break-word;
+                white-space: normal;
+                text-align: center;
+                margin: 0;
+                letter-spacing: 0.02em;
+            }
+
+            .title-divider {
+                width: 60%;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+                margin: 8px auto 0;
+                border-radius: 2px;
             }
 
             .input-section {
@@ -157,6 +189,7 @@
                 color: white;
                 transition: border-color 0.3s;
                 margin-bottom: 0;
+                font-family: 'Nunito', sans-serif;
             }
 
             #fromBox:focus,
@@ -267,6 +300,7 @@
                 cursor: pointer;
                 transition: all 0.3s;
                 font-weight: bold;
+                font-family: 'Nunito', sans-serif;
             }
 
             button:hover {
@@ -477,9 +511,9 @@
         /* ===================== MOBILE ===================== */
         @media screen and (max-width: 768px) {
             nav {
-                background-color: rgb(158, 5, 228);
+                background: linear-gradient(160deg, #50036a, #a147d8 60%, #872ddc);
                 width: 100%;
-                padding: 15px;
+                padding: 14px 14px 12px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -503,22 +537,54 @@
 
             .title-container {
                 text-align: center;
-                margin-bottom: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
+                margin-bottom: 12px;
+                width: 100%;
             }
 
+            /* No title-text-group needed on mobile — just centre everything */
             .title-text-group {
-                flex: 1;
-                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .title-badge {
+                display: inline-block;
+                background: rgba(255, 255, 255, 0.18);
+                border: 1px solid rgba(255, 255, 255, 0.32);
+                border-radius: 5px;
+                padding: 1px 9px;
+                font-family: 'Cinzel', serif;
+                font-size: 0.65rem;
+                font-weight: 700;
+                color: #f8d56e;
+                letter-spacing: 0.14em;
+                margin-bottom: 5px;
+                text-transform: uppercase;
             }
 
             .head1 {
-                font-size: 1.8rem;
-                font-family: Georgia, 'Times New Roman', Times, serif;
-                color: white;
-                margin-bottom: 5px;
+                font-family: 'Cinzel', Georgia, serif;
+                /* fluid: fits nicely from 320px to 768px */
+                font-size: clamp(14px, 4.2vw, 22px);
+                font-weight: 700;
+                color: #f0e6ff;
+                line-height: 1.3;
+                text-align: center;
+                letter-spacing: 0.01em;
+                word-break: break-word;
+                white-space: normal;
+                margin: 0;
+                padding: 0 4px;
+            }
+
+            .title-divider {
+                width: 55%;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+                margin: 6px auto 0;
+                border-radius: 2px;
             }
 
             .input-section {
@@ -617,6 +683,7 @@
                 border: 2px solid rgb(5, 5, 79);
                 color: white;
                 transition: border-color 0.3s;
+                font-family: 'Nunito', sans-serif;
             }
 
             #fromBox:focus,
@@ -685,6 +752,7 @@
                 cursor: pointer;
                 transition: all 0.3s;
                 font-weight: bold;
+                font-family: 'Nunito', sans-serif;
             }
 
             button:hover {
@@ -1561,7 +1629,6 @@
             transform: scale(1.3);
         }
 
-        /* Images accordion - no padding on list item with carousel */
         .department-list li.carousel-list-item {
             padding: 0;
             background: transparent;
@@ -1580,8 +1647,9 @@
         <div class="nav-container">
             <div class="title-container">
                 <div class="title-text-group">
-                    <h1 class="head1">FIND YOUR WAY</h1>
-                    <p>Campus Navigation Assistant</p>
+                    <span class="title-badge">PSGCAS</span>
+                    <h1 class="head1">Campus Navigation Assistant</h1>
+                    <div class="title-divider"></div>
                 </div>
             </div>
             <div class="input-section">
@@ -1671,15 +1739,15 @@
                 <ul class="department-list">
                     <li>
                         <p class="depat-name">B.Sc Computer Technology(SF)</p>
-                        <p class="room-range">Rooms: E101 - E120</p>
+                        <p class="room-range">Rooms: E101,E120</p>
                     </li>
                     <li>
                         <p class="depat-name">B.Sc Information Technology(SF)</p>
-                        <p class="room-range">Rooms: E101 - E120</p>
+                        <p class="room-range">Rooms: E101,E120</p>
                     </li>
                     <li>
                         <p class="depat-name">B.A English(Aided)</p>
-                        <p class="room-range">Rooms: E101 - E120</p>
+                        <p class="room-range">Rooms: E101,E120</p>
                     </li>
                     <li>
                         <p class="depat-name">Laboratory</p>
@@ -1702,15 +1770,15 @@
                 <ul class="department-list">
                     <li>
                         <p class="depat-name">B.Sc Computer Science(SF)</p>
-                        <p class="room-range">Rooms: E201 - E220</p>
+                        <p class="room-range">Rooms: E109,E206,E207,E209,E210,E212</p>
                     </li>
                     <li>
                         <p class="depat-name">M.Sc Software Systems(SF)</p>
-                        <p class="room-range">Rooms: E201 - E202</p>
+                        <p class="room-range">Rooms: E201,E202</p>
                     </li>
                     <li>
                         <p class="depat-name">B.A Tamil(Aided)</p>
-                        <p class="room-range">Rooms: E201 - E202</p>
+                        <p class="room-range">Rooms: E201,E202</p>
                     </li>
                     <li>
                         <p class="depat-name">Laboratory</p>
@@ -1733,15 +1801,15 @@
                 <ul class="department-list">
                     <li>
                         <p class="depat-name">B.Sc Computer Application(SF)</p>
-                        <p class="room-range">Rooms: E301 - E320</p>
+                        <p class="room-range">Rooms: E301,E320</p>
                     </li>
                     <li>
                         <p class="depat-name">B.Voc Networking & Mobile Application(SF)</p>
-                        <p class="room-range">Rooms: E301 - E320</p>
+                        <p class="room-range">Rooms: E301,E320</p>
                     </li>
                     <li>
                         <p class="depat-name">B.Sc Computer Science with Data Analytics(SF)</p>
-                        <p class="room-range">Rooms: E301 - E320</p>
+                        <p class="room-range">Rooms: E301,E320</p>
                     </li>
                     <li>
                         <p class="depat-name">Laboratory</p>
@@ -1762,14 +1830,17 @@
                 </summary>
                 <ul class="department-list">
                     <li class="carousel-list-item">
-                        <!-- Sidebar Image Carousel -->
                         <div class="sidebar-image-carousel" id="sidebarCarousel">
                             <div class="carousel-images-wrapper">
                                 <img class="carousel-img active" src="E Block.jpg" alt="E Block Image 1"
                                     onerror="this.src='https://placehold.co/400x250/1a1a2e/ffffff?text=E+Block'" />
                                 <img class="carousel-img" src="E Block2.webp" alt="E Block Image 2"
                                     onerror="this.src='https://placehold.co/400x250/2d1b69/ffffff?text=E+Block+2'" />
-                                <span class="carousel-counter" id="carouselCounter">1 / 2</span>
+                                <img class="carousel-img" src="lab 2.jpg" alt="E Block Image 3"
+                                    onerror="this.src='https://placehold.co/400x250/2d1b69/ffffff?text=E+Block+2'" />
+                                <img class="carousel-img" src="lab 3.jpg" alt="E Block Image 4"
+                                    onerror="this.src='https://placehold.co/400x250/2d1b69/ffffff?text=E+Block+2'" />
+                                <span class="carousel-counter" id="carouselCounter">1 / 4</span>
                             </div>
                             <button class="carousel-arrow left" id="carouselPrev"
                                 aria-label="Previous image">&#8249;</button>
@@ -1805,18 +1876,16 @@
         ============================================================ */
         const galleryImages = [
             { src: 'E Block.jpg', fallback: 'https://placehold.co/900x600/1a1a2e/ffffff?text=E+Block+Front', alt: 'E Block' },
-            { src: 'E Block2.webp', fallback: 'https://placehold.co/900x600/2d1b69/ffffff?text=E+Block+Side', alt: 'E Block' }
+            { src: 'E Block2.webp', fallback: 'https://placehold.co/900x600/2d1b69/ffffff?text=E+Block+Side', alt: 'E Block' },
+            { src: 'lab 2.jpg', fallback: 'https://placehold.co/900x600/2d1b69/ffffff?text=E+Block+Side', alt: 'E Block' },
+            { src: 'lab 3.jpg', fallback: 'https://placehold.co/900x600/2d1b69/ffffff?text=E+Block+Side', alt: 'E Block' },
         ];
 
-        let carouselIndex = 0;
-        let lightboxIndex = 0;
+        let carouselIndex = 0, lightboxIndex = 0;
 
         function initCarousel() {
             const imgs = document.querySelectorAll('#sidebarCarousel .carousel-img');
             const dotsContainer = document.getElementById('carouselDots');
-            const counter = document.getElementById('carouselCounter');
-
-            // Build dots
             dotsContainer.innerHTML = '';
             galleryImages.forEach((_, i) => {
                 const dot = document.createElement('button');
@@ -1825,36 +1894,18 @@
                 dot.addEventListener('click', () => goToCarousel(i));
                 dotsContainer.appendChild(dot);
             });
-
-            // Click image to open lightbox
-            imgs.forEach((img, i) => {
-                img.addEventListener('click', () => openLightbox(i));
-            });
-
-            document.getElementById('carouselPrev').addEventListener('click', (e) => {
-                e.stopPropagation();
-                goToCarousel((carouselIndex - 1 + galleryImages.length) % galleryImages.length);
-            });
-
-            document.getElementById('carouselNext').addEventListener('click', (e) => {
-                e.stopPropagation();
-                goToCarousel((carouselIndex + 1) % galleryImages.length);
-            });
+            imgs.forEach((img, i) => img.addEventListener('click', () => openLightbox(i)));
+            document.getElementById('carouselPrev').addEventListener('click', e => { e.stopPropagation(); goToCarousel((carouselIndex - 1 + galleryImages.length) % galleryImages.length); });
+            document.getElementById('carouselNext').addEventListener('click', e => { e.stopPropagation(); goToCarousel((carouselIndex + 1) % galleryImages.length); });
         }
 
         function goToCarousel(idx) {
             const imgs = document.querySelectorAll('#sidebarCarousel .carousel-img');
             const dots = document.querySelectorAll('#carouselDots .carousel-dot');
-            const counter = document.getElementById('carouselCounter');
-
-            imgs[carouselIndex].classList.remove('active');
-            dots[carouselIndex].classList.remove('active');
-
+            imgs[carouselIndex].classList.remove('active'); dots[carouselIndex].classList.remove('active');
             carouselIndex = idx;
-
-            imgs[carouselIndex].classList.add('active');
-            dots[carouselIndex].classList.add('active');
-            counter.textContent = `${carouselIndex + 1} / ${galleryImages.length}`;
+            imgs[carouselIndex].classList.add('active'); dots[carouselIndex].classList.add('active');
+            document.getElementById('carouselCounter').textContent = `${carouselIndex + 1} / ${galleryImages.length}`;
         }
 
         function initLightbox() {
@@ -1867,20 +1918,11 @@
                 dot.addEventListener('click', () => goToLightbox(i));
                 dotsContainer.appendChild(dot);
             });
-
             document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-            document.getElementById('lightboxPrev').addEventListener('click', () => {
-                goToLightbox((lightboxIndex - 1 + galleryImages.length) % galleryImages.length);
-            });
-            document.getElementById('lightboxNext').addEventListener('click', () => {
-                goToLightbox((lightboxIndex + 1) % galleryImages.length);
-            });
-
-            document.getElementById('lightbox').addEventListener('click', (e) => {
-                if (e.target === document.getElementById('lightbox')) closeLightbox();
-            });
-
-            document.addEventListener('keydown', (e) => {
+            document.getElementById('lightboxPrev').addEventListener('click', () => goToLightbox((lightboxIndex - 1 + galleryImages.length) % galleryImages.length));
+            document.getElementById('lightboxNext').addEventListener('click', () => goToLightbox((lightboxIndex + 1) % galleryImages.length));
+            document.getElementById('lightbox').addEventListener('click', e => { if (e.target === document.getElementById('lightbox')) closeLightbox(); });
+            document.addEventListener('keydown', e => {
                 const lb = document.getElementById('lightbox');
                 if (!lb.classList.contains('active')) return;
                 if (e.key === 'Escape') closeLightbox();
@@ -1889,63 +1931,26 @@
             });
         }
 
-        function openLightbox(idx) {
-            lightboxIndex = idx;
-            const lb = document.getElementById('lightbox');
-            lb.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            updateLightboxImage();
-        }
-
-        function closeLightbox() {
-            const lb = document.getElementById('lightbox');
-            lb.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function goToLightbox(idx) {
-            lightboxIndex = idx;
-            updateLightboxImage();
-        }
-
+        function openLightbox(idx) { lightboxIndex = idx; document.getElementById('lightbox').classList.add('active'); document.body.style.overflow = 'hidden'; updateLightboxImage(); }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = ''; }
+        function goToLightbox(idx) { lightboxIndex = idx; updateLightboxImage(); }
         function updateLightboxImage() {
             const img = document.getElementById('lightboxImg');
-            const counter = document.getElementById('lightboxCounter');
-            const dots = document.querySelectorAll('#lightboxDots .lightbox-dot');
-
-            // Animate out/in
-            img.style.animation = 'none';
-            img.offsetHeight; // reflow
-            img.style.animation = 'lightboxImgIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
-
+            img.style.animation = 'none'; img.offsetHeight;
+            img.style.animation = 'lightboxImgIn 0.3s cubic-bezier(0.34,1.56,0.64,1)';
             const g = galleryImages[lightboxIndex];
-            img.src = g.src;
-            img.alt = g.alt;
-            img.onerror = () => { img.src = g.fallback; };
-
-            counter.textContent = `${lightboxIndex + 1} / ${galleryImages.length}`;
-
-            dots.forEach((d, i) => {
-                d.classList.toggle('active', i === lightboxIndex);
-            });
+            img.src = g.src; img.alt = g.alt; img.onerror = () => { img.src = g.fallback; };
+            document.getElementById('lightboxCounter').textContent = `${lightboxIndex + 1} / ${galleryImages.length}`;
+            document.querySelectorAll('#lightboxDots .lightbox-dot').forEach((d, i) => d.classList.toggle('active', i === lightboxIndex));
         }
 
-        // Touch/swipe support for lightbox
         let lbTouchStartX = 0;
-        document.getElementById ? (() => {
-            document.addEventListener('touchstart', (e) => {
-                if (!document.getElementById('lightbox').classList.contains('active')) return;
-                lbTouchStartX = e.changedTouches[0].screenX;
-            }, { passive: true });
-            document.addEventListener('touchend', (e) => {
-                if (!document.getElementById('lightbox').classList.contains('active')) return;
-                const dx = e.changedTouches[0].screenX - lbTouchStartX;
-                if (Math.abs(dx) > 40) {
-                    if (dx < 0) goToLightbox((lightboxIndex + 1) % galleryImages.length);
-                    else goToLightbox((lightboxIndex - 1 + galleryImages.length) % galleryImages.length);
-                }
-            }, { passive: true });
-        })() : null;
+        document.addEventListener('touchstart', e => { if (!document.getElementById('lightbox').classList.contains('active')) return; lbTouchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        document.addEventListener('touchend', e => {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            const dx = e.changedTouches[0].screenX - lbTouchStartX;
+            if (Math.abs(dx) > 40) { if (dx < 0) goToLightbox((lightboxIndex + 1) % galleryImages.length); else goToLightbox((lightboxIndex - 1 + galleryImages.length) % galleryImages.length); }
+        }, { passive: true });
 
         /* ============================================================
            ORIGINAL MAP & NAVIGATION CODE (unchanged)
@@ -1959,8 +1964,7 @@
         const ARROW_SPEED = 0.00012;
         let isNavigating = false, currentDestination = null, fullRoutePath = [], currentPathIndices = [];
         let lastUpdateTime = 0;
-        const UPDATE_THRESHOLD = 2000, PROXIMITY_THRESHOLD = 15, DEVIATION_THRESHOLD = 25;
-        const ARRIVED_THRESHOLD = 20;
+        const UPDATE_THRESHOLD = 2000, PROXIMITY_THRESHOLD = 15, DEVIATION_THRESHOLD = 25, ARRIVED_THRESHOLD = 20;
         let hasArrived = false;
         let graph = { nodes: [], edges: [] }, nodeIndex = new Map(), places = [];
         let lastResults, activeRouteIndex = 0;
@@ -2026,7 +2030,7 @@
             { "id": "Khokho", "name": "Khokho Court", "lat": 11.030778, "lng": 77.033976, "icon": "🏃‍♀️" },
             { "id": "Basketball", "name": "Basketball Court", "lat": 11.032139, "lng": 77.036283, "icon": "🏀" },
             { "id": "indoor", "name": "Indoor Auditorium", "lat": 11.033304, "lng": 77.035299, "icon": "⛹️" },
-            { "id": "Parking", "name": "Students Bike Parking Area", "lat": 11.034749, "lng": 77.034258, "icon": "🏍️" },
+            { "id": "Parking", "name": "Students & General Parking Area", "lat": 11.034749, "lng": 77.034258, "icon": "🏍️" },
             { "id": "Parking", "name": "Staff Parking", "lat": 11.034203, "lng": 77.033518, "icon": "🅿️" },
             { "id": "Parking", "name": "Students Car Parking Area", "lat": 11.033577, "lng": 77.036263, "icon": "🚗" },
             { "id": "back", "name": "Back Gate", "lat": 11.031834, "lng": 77.036534, "icon": "⛩️" }
@@ -2131,53 +2135,37 @@
             hasArrived = true; isNavigating = false; stopArrowAnimation();
             const subtext = destName ? `You have arrived at ${destName}.` : 'You have arrived.';
             if (isMobile()) {
-                const info = document.getElementById('mobileRouteInfo');
-                if (info) info.classList.remove('active');
-                const toast = document.getElementById('arrivedToast');
-                const sub = document.getElementById('mobileArrivedSubtext');
+                const info = document.getElementById('mobileRouteInfo'); if (info) info.classList.remove('active');
+                const toast = document.getElementById('arrivedToast'), sub = document.getElementById('mobileArrivedSubtext');
                 if (sub) sub.textContent = subtext;
                 if (toast) { toast.classList.remove('show'); void toast.offsetWidth; toast.classList.add('show'); }
             } else {
-                const stack = document.getElementById('desktopRouteInfoStack');
-                if (stack) stack.innerHTML = '';
-                const box = document.getElementById('desktopArrivedBox');
-                const sub = document.getElementById('desktopArrivedSubtext');
+                const stack = document.getElementById('desktopRouteInfoStack'); if (stack) stack.innerHTML = '';
+                const box = document.getElementById('desktopArrivedBox'), sub = document.getElementById('desktopArrivedSubtext');
                 if (sub) sub.textContent = subtext;
                 if (box) { box.classList.remove('show'); void box.offsetWidth; box.classList.add('show'); }
             }
         }
 
-        function checkIfArrived(userPos) {
-            if (!isNavigating || !currentDestination || hasArrived) return;
-            const dist = hav(userPos, currentDestination);
-            if (dist <= ARRIVED_THRESHOLD) showArrivedNotification(currentDestination.name);
-        }
-
+        function checkIfArrived(userPos) { if (!isNavigating || !currentDestination || hasArrived) return; const dist = hav(userPos, currentDestination); if (dist <= ARRIVED_THRESHOLD) showArrivedNotification(currentDestination.name); }
         function isMobile() { return window.innerWidth <= 768; }
         function fmtDist(m) { if (m >= 1000) return (m / 1000).toFixed(2) + ' km'; return Math.round(m) + ' m'; }
         function fmtTime(m) { const mins = Math.ceil(m / 1.4 / 60); return mins < 1 ? '< 1 min' : mins + ' min'; }
 
         function renderDesktopRouteStack(results, activeIdx) {
-            const stack = document.getElementById('desktopRouteInfoStack');
-            if (!stack) return;
-            stack.innerHTML = '';
-            if (!results || !results.length) return;
+            const stack = document.getElementById('desktopRouteInfoStack'); if (!stack) return; stack.innerHTML = ''; if (!results || !results.length) return;
             const sorted = results.map((r, i) => ({ ...r, origIdx: i })).sort((a, b) => a.distance - b.distance);
             sorted.forEach((res, si) => {
-                const isActive = res.origIdx === activeIdx;
-                const box = document.createElement('div');
+                const isActive = res.origIdx === activeIdx, box = document.createElement('div');
                 box.className = 'route-info-box' + (isActive ? ' active-route' : '');
-                const label = si === 0 ? 'Shortest Route' : 'Route ' + (si + 1);
-                const badgeText = isActive ? '&#9679; Active' : 'View';
+                const label = si === 0 ? 'Shortest Route' : 'Route ' + (si + 1), badgeText = isActive ? '&#9679; Active' : 'View';
                 box.innerHTML = `<div class="route-box-header"><span class="route-box-label${si === 0 ? ' shortest' : ''}">${label}</span><span class="route-box-badge${isActive ? ' active-badge' : ''}">${badgeText}</span></div><div class="route-box-stats"><div class="route-stat"><span class="route-stat-value">${fmtDist(res.distance)}</span><span class="route-stat-unit">Distance</span></div><div class="route-stat-divider"></div><div class="route-stat"><span class="route-stat-value">${fmtTime(res.distance)}</span><span class="route-stat-unit">Est. Walk</span></div></div>`;
-                box.addEventListener('click', () => renderSelectedRoute(res.origIdx));
-                stack.appendChild(box);
+                box.addEventListener('click', () => renderSelectedRoute(res.origIdx)); stack.appendChild(box);
             });
         }
 
         function updateMobileRouteInfo(distance) {
-            const box = document.getElementById('mobileRouteInfo');
-            if (!box) return;
+            const box = document.getElementById('mobileRouteInfo'); if (!box) return;
             if (distance == null || !isFinite(distance)) { box.classList.remove('active'); return; }
             document.getElementById('mobileDistVal').textContent = fmtDist(distance);
             document.getElementById('mobileTimeVal').textContent = fmtTime(distance);
@@ -2185,57 +2173,37 @@
         }
 
         function clearRouteInfoPanels() {
-            const stack = document.getElementById('desktopRouteInfoStack');
-            if (stack) stack.innerHTML = '';
-            const mob = document.getElementById('mobileRouteInfo');
-            if (mob) mob.classList.remove('active');
-            const toast = document.getElementById('arrivedToast');
-            if (toast) toast.classList.remove('show');
-            const dbox = document.getElementById('desktopArrivedBox');
-            if (dbox) dbox.classList.remove('show');
+            const stack = document.getElementById('desktopRouteInfoStack'); if (stack) stack.innerHTML = '';
+            const mob = document.getElementById('mobileRouteInfo'); if (mob) mob.classList.remove('active');
+            const toast = document.getElementById('arrivedToast'); if (toast) toast.classList.remove('show');
+            const dbox = document.getElementById('desktopArrivedBox'); if (dbox) dbox.classList.remove('show');
             hasArrived = false;
         }
 
-        function buildCumDist(ll) {
-            const c = [0];
-            for (let i = 1; i < ll.length; i++) c.push(c[i - 1] + hav({ lat: ll[i - 1][0], lng: ll[i - 1][1] }, { lat: ll[i][0], lng: ll[i][1] }));
-            return c;
-        }
+        function buildCumDist(ll) { const c = [0]; for (let i = 1; i < ll.length; i++) c.push(c[i - 1] + hav({ lat: ll[i - 1][0], lng: ll[i - 1][1] }, { lat: ll[i][0], lng: ll[i][1] })); return c; }
         function interpolateOnPath(ll, cum, prog) {
-            const total = cum[cum.length - 1], target = prog * total;
-            let lo = 0, hi = cum.length - 1;
+            const total = cum[cum.length - 1], target = prog * total; let lo = 0, hi = cum.length - 1;
             while (lo < hi - 1) { const mid = (lo + hi) >> 1; if (cum[mid] <= target) lo = mid; else hi = mid; }
-            const sl = cum[hi] - cum[lo], t = sl > 0 ? (target - cum[lo]) / sl : 0;
-            const a = ll[lo], b = ll[hi];
-            const lat = a[0] + (b[0] - a[0]) * t, lng = a[1] + (b[1] - a[1]) * t;
-            const dy = b[0] - a[0], dx = (b[1] - a[1]) * Math.cos(a[0] * Math.PI / 180);
+            const sl = cum[hi] - cum[lo], t = sl > 0 ? (target - cum[lo]) / sl : 0, a = ll[lo], b = ll[hi];
+            const lat = a[0] + (b[0] - a[0]) * t, lng = a[1] + (b[1] - a[1]) * t, dy = b[0] - a[0], dx = (b[1] - a[1]) * Math.cos(a[0] * Math.PI / 180);
             return { lat, lng, angleDeg: Math.atan2(dx, dy) * 180 / Math.PI };
         }
-        function makeArrowIcon(deg) {
-            return L.divIcon({ className: 'route-arrow-marker', html: `<svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(${deg}deg);filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5));"><circle cx="18" cy="18" r="17" fill="rgba(255,230,0,0.22)"/><circle cx="18" cy="18" r="13" fill="#FFE000" stroke="#ff9900" stroke-width="2"/><polygon points="18,6 24,22 18,18 12,22" fill="#cc6600"/><circle cx="18" cy="25" r="2.5" fill="#cc6600"/></svg>`, iconSize: [36, 36], iconAnchor: [18, 18] });
-        }
+        function makeArrowIcon(deg) { return L.divIcon({ className: 'route-arrow-marker', html: `<svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(${deg}deg);filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5));"><circle cx="18" cy="18" r="17" fill="rgba(255,230,0,0.22)"/><circle cx="18" cy="18" r="13" fill="#FFE000" stroke="#ff9900" stroke-width="2"/><polygon points="18,6 24,22 18,18 12,22" fill="#cc6600"/><circle cx="18" cy="25" r="2.5" fill="#cc6600"/></svg>`, iconSize: [36, 36], iconAnchor: [18, 18] }); }
         function startArrowAnimation(ll, sp = 0) {
-            stopArrowAnimation();
-            if (!ll || ll.length < 2) return;
+            stopArrowAnimation(); if (!ll || ll.length < 2) return;
             arrowRouteLatlngs = ll; arrowProgress = sp;
             const cum = buildCumDist(ll), init = interpolateOnPath(ll, cum, sp);
             if (!arrowMarker) arrowMarker = L.marker([init.lat, init.lng], { icon: makeArrowIcon(init.angleDeg), zIndexOffset: 1200, interactive: false }).addTo(campusMap);
             else { arrowMarker.setLatLng([init.lat, init.lng]); arrowMarker.setIcon(makeArrowIcon(init.angleDeg)); }
             let lts = null;
             function loop(ts) {
-                if (lts !== null) { arrowProgress += ARROW_SPEED * (ts - lts); if (arrowProgress >= 1) arrowProgress = 0; }
-                lts = ts;
-                const p = interpolateOnPath(arrowRouteLatlngs, cum, arrowProgress);
-                arrowMarker.setLatLng([p.lat, p.lng]); arrowMarker.setIcon(makeArrowIcon(p.angleDeg));
+                if (lts !== null) { arrowProgress += ARROW_SPEED * (ts - lts); if (arrowProgress >= 1) arrowProgress = 0; } lts = ts;
+                const p = interpolateOnPath(arrowRouteLatlngs, cum, arrowProgress); arrowMarker.setLatLng([p.lat, p.lng]); arrowMarker.setIcon(makeArrowIcon(p.angleDeg));
                 arrowAnimFrameId = requestAnimationFrame(loop);
             }
             arrowAnimFrameId = requestAnimationFrame(loop);
         }
-        function stopArrowAnimation() {
-            if (arrowAnimFrameId) { cancelAnimationFrame(arrowAnimFrameId); arrowAnimFrameId = null; }
-            if (arrowMarker) { campusMap.removeLayer(arrowMarker); arrowMarker = null; }
-            arrowRouteLatlngs = []; arrowProgress = 0;
-        }
+        function stopArrowAnimation() { if (arrowAnimFrameId) { cancelAnimationFrame(arrowAnimFrameId); arrowAnimFrameId = null; } if (arrowMarker) { campusMap.removeLayer(arrowMarker); arrowMarker = null; } arrowRouteLatlngs = []; arrowProgress = 0; }
 
         function openSidebar() { document.getElementById('sideMenu').classList.add('open'); document.getElementById('overlay').classList.add('active'); document.body.style.overflow = 'hidden'; setTimeout(() => document.getElementById('closeBtn').focus(), 100); }
         function closeSidebar() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.style.overflow = ''; }
@@ -2255,29 +2223,20 @@
 
         function filterItems(iid, lid) {
             const inp = document.getElementById(iid), lst = document.getElementById(lid), items = Array.from(lst.getElementsByTagName('li')), f = inp.value.toLowerCase();
-            items.forEach(i => i.style.display = 'none');
-            if (!f) { items.forEach(i => i.style.display = ''); return; }
+            items.forEach(i => i.style.display = 'none'); if (!f) { items.forEach(i => i.style.display = ''); return; }
             items.forEach(i => { if (i.textContent.toLowerCase().startsWith(f)) i.style.display = ''; });
             items.forEach(i => { if (!i.textContent.toLowerCase().startsWith(f) && i.textContent.toLowerCase().includes(f)) i.style.display = ''; });
         }
         function showList(lid) { document.querySelectorAll('.dropdown').forEach(l => l.style.display = 'none'); document.getElementById(lid).style.display = 'block'; }
         function setupSwapButton() {
             const sw = document.querySelector('.swapbox');
-            if (sw) {
-                sw.addEventListener('click', () => {
-                    const fb = document.getElementById('fromBox'), tb = document.getElementById('toBox');
-                    [fb.value, tb.value] = [tb.value, fb.value];
-                    sw.classList.toggle('flipped');
-                });
-            }
+            if (sw) sw.addEventListener('click', () => { const fb = document.getElementById('fromBox'), tb = document.getElementById('toBox');[fb.value, tb.value] = [tb.value, fb.value]; sw.classList.toggle('flipped'); });
         }
         function clearRoute() {
             document.getElementById('fromBox').value = ''; document.getElementById('toBox').value = '';
             document.querySelectorAll('.dropdown').forEach(l => l.style.display = 'none');
-            isNavigating = false; currentDestination = null; fullRoutePath = []; currentPathIndices = []; activeRouteIndex = 0;
-            hasArrived = false;
-            clearRouteInfoPanels(); stopArrowAnimation();
-            if (campusMap) clearRoutes();
+            isNavigating = false; currentDestination = null; fullRoutePath = []; currentPathIndices = []; activeRouteIndex = 0; hasArrived = false;
+            clearRouteInfoPanels(); stopArrowAnimation(); if (campusMap) clearRoutes();
         }
         function setupGlobalClickHandler() {
             document.addEventListener('click', function (e) {
@@ -2319,12 +2278,12 @@
         function dijkstra(adj, src, dst) {
             const n = adj.length, dist = Array(n).fill(Infinity), prev = Array(n).fill(-1), used = Array(n).fill(false);
             dist[src] = 0; const pq = [{ d: 0, i: src }];
-            const pop = () => { if (!pq.length) return null; let bi = -1, bd = Infinity; for (let i = 0; i < pq.length; i++) if (pq[i].d < bd) { bd = pq[i].d; bi = i; } return bi < 0 ? null : pq.splice(bi, 1)[0]; };
+            const pop = () => { if (!pq.length) return null; let bi = -1, bd = Infinity; for (let i = 0; i < pq.length; i++)if (pq[i].d < bd) { bd = pq[i].d; bi = i; } return bi < 0 ? null : pq.splice(bi, 1)[0]; };
             while (pq.length) { const cur = pop(); if (!cur) break; const u = cur.i; if (used[u]) continue; used[u] = true; if (u === dst) break; for (const [v, w] of adj[u]) if (!used[v] && dist[u] + w < dist[v]) { dist[v] = dist[u] + w; prev[v] = u; pq.push({ d: dist[v], i: v }); } }
             const path = []; let u = dst; if (prev[u] === -1 && u !== src) return { path: [], distance: Infinity }; while (u !== -1) { path.push(u); if (u === src) break; u = prev[u]; } path.reverse(); return { path, distance: dist[dst] };
         }
-        function pathDistance(idx) { let d = 0; for (let i = 0; i + 1 < idx.length; i++) d += hav(graph.nodes[idx[i]], graph.nodes[idx[i + 1]]); return d; }
-        function arraysEqual(a, b) { if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false; return true; }
+        function pathDistance(idx) { let d = 0; for (let i = 0; i + 1 < idx.length; i++)d += hav(graph.nodes[idx[i]], graph.nodes[idx[i + 1]]); return d; }
+        function arraysEqual(a, b) { if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++)if (a[i] !== b[i]) return false; return true; }
         function yensKShortests(i, t, K) {
             const A = [], B = [], adj0 = buildAdj(), p0 = dijkstra(adj0, i, t);
             if (!p0.path.length || !isFinite(p0.distance)) return A; A.push(p0);
@@ -2382,8 +2341,7 @@
             if (!isNavigating || !userLatLng || !currentDestination || !currentPathIndices.length) return;
             const now = Date.now(); if (now - lastUpdateTime < UPDATE_THRESHOLD) return; lastUpdateTime = now;
             const up = { lat: userLatLng[0], lng: userLatLng[1] };
-            checkIfArrived(up);
-            if (hasArrived) return;
+            checkIfArrived(up); if (hasArrived) return;
             if (checkDeviationAndRecalc(up)) return;
             let ci = 0, md = Infinity;
             for (let i = 0; i < currentPathIndices.length; i++) { const d = hav(up, graph.nodes[currentPathIndices[i]]); if (d < md) { md = d; ci = i; } }
@@ -2425,8 +2383,7 @@
             if (A && B) setStartEndMarkers(A, B);
             if (pr) setTimeout(() => campusMap.fitBounds(L.polyline(sll).getBounds().pad(0.2)), 100);
             const dist = results[selectedIndex].distance;
-            if (isMobile()) updateMobileRouteInfo(dist);
-            else renderDesktopRouteStack(results, selectedIndex);
+            if (isMobile()) updateMobileRouteInfo(dist); else renderDesktopRouteStack(results, selectedIndex);
         }
 
         function getLandmarkByNameOrId(name) {
@@ -2440,17 +2397,11 @@
             if (!fl || !tl) { alert('Please select both From and To locations'); return; }
             if (!campusMap) { initializeMap(); return; }
             hasArrived = false;
-            const toast = document.getElementById('arrivedToast');
-            if (toast) toast.classList.remove('show');
-            const dbox = document.getElementById('desktopArrivedBox');
-            if (dbox) dbox.classList.remove('show');
+            const toast = document.getElementById('arrivedToast'); if (toast) toast.classList.remove('show');
+            const dbox = document.getElementById('desktopArrivedBox'); if (dbox) dbox.classList.remove('show');
             startGeolocation();
             if (fl === 'Current Location') {
-                if (!userLatLng) {
-                    alert('Waiting for your location... Please allow location access.');
-                    navigator.geolocation.getCurrentPosition(pos => { userLatLng = [pos.coords.latitude, pos.coords.longitude]; searchRoute(); }, () => alert('Could not get your current location.'));
-                    return;
-                }
+                if (!userLatLng) { alert('Waiting for your location... Please allow location access.'); navigator.geolocation.getCurrentPosition(pos => { userLatLng = [pos.coords.latitude, pos.coords.longitude]; searchRoute(); }, () => alert('Could not get your current location.')); return; }
                 const B = getLandmarkByNameOrId(tl); if (!B) { alert('Invalid destination'); return; }
                 isNavigating = true; currentDestination = B;
                 const up = { lat: userLatLng[0], lng: userLatLng[1] };
@@ -2515,8 +2466,6 @@
             initializeMap(); setupSwapButton(); setupGlobalClickHandler(); setupSidebarHandlers();
             document.getElementById('currentLocationBtn')?.addEventListener('click', centerOnUserLocation);
             document.getElementById('landmarkToggleBtn')?.addEventListener('click', toggleLandmarks);
-
-            // Initialize gallery
             initCarousel();
             initLightbox();
         });
